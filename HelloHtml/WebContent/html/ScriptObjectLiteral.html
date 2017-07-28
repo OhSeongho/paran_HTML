@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var computer = {
+		manufacturer :"hp",
+		modelNm : "HP Elite Book",
+		outPrice : 1300000,
+		isColor : true,
+		basicVolume :0,
+		func:{//object 안에 object가능
+			turnOn:function(){
+				console.log("turnOn 함수 호출");
+			}
+			,turnOff:function(){
+				console.log("꺼짐 bye");
+			}
+			,volumeUp:function(){
+				
+				
+			}
+			,volumeDown:function(){
+				
+			}
+		}
+};
+console.log(computer["manufacturer"]);//대괄호 표기법["String"]으로 호출
+console.log(computer.modelNm);// . 표기
+console.log(computer["outPrice"]);
+console.log(computer.isColor);
+computer.func.turnOn();
+computer.isPentium = true;
+console.log(computer.isPentium);
+
+var myPerson = new Object();
+myPerson.name ="홍길동";
+myPerson.age = 500;
+myPerson.showInfo =function(){
+	console.log(this.name);
+	console.log(this.age);
+}
+console.log(myPerson.name);
+console.log(myPerson.age);
+//myPerson.showInfo();
+computer.salePrice = computer.outPrice * 0.85;
+computer.func.turnOff();
+console.log(computer.salePrice);
+</script>
+</head>
+<body>
+
+</body>
+</html>

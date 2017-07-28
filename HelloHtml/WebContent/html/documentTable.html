@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>자료문서보관문서색인표</title>
+<style type="text/css">
+input{
+	border : 0px;
+	vertical-align : center;
+}
+</style>
+<script>
+function addRow(){
+	var fileTable = document.getElementById("fileTable");
+	var tBody = fileTable.tBodies[0];
+	//console.log(fileTable.tBodies);
+	var row = tBody.insertRow(tBody.rows.length);
+	row.innerHTML='<td><input type="checkBox"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>\
+	<td><input type="text"></td>';	
+	/* var cell = row.insertCell(0);
+	cell.innerHTML='<input type="checkBox">';
+	row.insertCell(1).innerHTML ='new row';
+	row.insertCell(2);
+	row.insertCell(3);
+	row.insertCell(4);
+	row.insertCell(5);
+	row.insertCell(6);
+	row.insertCell(7);
+	row.insertCell(8);
+	row.insertCell(9);
+	 */
+	//console.dir(fileTable);
+	//console.log(fileTable.nodeName);
+	//console.dir(fileTable);
+}
+function delRow(){
+	var fileTable = document.getElementById("fileTable");
+	var tBody = fileTable.tBodies[0];
+	for(var i=tBody.rows.length-1;i>=0;i--){
+		var trObj = tBody.rows[i];
+		if(trObj.children[0].children[0].checked){
+			tBody.deleteRow(i);
+		}
+		console.dir(trObj);
+	}
+	//console.dir(11);
+}
+</script>
+</head>
+<body>
+	
+	<h2 style="text-align:center;text-decoration : underline;">자료문서보관문서색인표 </h2>
+	
+	<input type="button" onclick="addRow();" value="행추가" style="border :3px;">
+	<input type="button" onclick="delRow();" value="행삭제">
+	<p></p>
+	<table id="fileTable" border="2px" style="margin:auto;width:100%;text-align:center;border-collapse:collapse;">
+		<thead style="border:2px solid black;">
+			<tr>
+				<th rowspan="2">선택</th>
+				<th rowspan="2"> No </th>
+				<th rowspan="2">보&nbsp;존<br>기&nbsp;간</th>
+				<th colspan="3">보&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;철</th>
+				<th rowspan="2">보관부서</th>
+				<th rowspan="2">승인<br>여부</th>
+				<th rowspan="2">승인</th>
+				<th rowspan="2">폐기일</th>
+			</tr>
+			<tr>
+				<th>분류기호</th>
+				<th>자료명</th>
+				<th>전장수</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			
+		</tbody>
+	</table>
+	<img alt="dog" src="..\img\dog.jpg" width="300px" height="300px"></img>
+
+</body>
+</html>

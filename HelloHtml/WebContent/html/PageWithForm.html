@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Form Tag</title>
+<style>
+	form{
+		border : 1px solid #c2f0c2;
+	}
+</style>
+<script type="text/javascript">
+	var regexp =/[a-z]/g;//g는 global
+	console.log(regexp.test("a"));
+	console.log(regexp.test("A"));
+</script>
+</head>
+<body>
+	<form action="../html/signUp.txt" method="post">
+		<legend>회원가입:</legend>
+		이름:	
+			<input type="text" name="이름" value=""/><br/>
+		전화번호:
+			<input type="text" name="전화" value=""/><br/>
+		<span>생년월일 : </span>
+			<input type="date"><br/>
+		성별 :<input type="radio" name="gender" value="male">남 &nbsp;
+			<input type="radio" name="gender" value="female">여<br/>
+			
+			<input type="submit" value="제출"/>
+			<textarea style="width:200px; height:100px;"></textarea>
+	</form>
+</body>
+</html>

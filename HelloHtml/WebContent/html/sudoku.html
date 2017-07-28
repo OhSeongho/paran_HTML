@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+       <script src="./jquery-1.12.3.min.js" ></script>
+        <script type="text/javascript" >
+            $("document").ready(function(){
+                
+                arrayGen();
+                read();
+                $("table input").keyup(function(){
+                    correctAnswer();
+                });
+            
+            });
+            var row=['A','B','C','D','E','F','G','H','I'];
+            var ar=new Array(9);
+            var block_1=[[0,0,0,],[0,0,0],[0,0,0]], block_2=[[0,0,0,],[0,0,0],[0,0,0]], block_3=[[0,0,0,],[0,0,0],[0,0,0]],block_4=[[0,0,0,],[0,0,0],[0,0,0]],block_5=[[0,0,0,],[0,0,0],[0,0,0]],block_6=[[0,0,0,],[0,0,0],[0,0,0]],block_7=[[0,0,0,],[0,0,0],[0,0,0]],block_8=[[0,0,0,],[0,0,0],[0,0,0]],block_9=[[0,0,0,],[0,0,0],[0,0,0]];
+            
+            function read(){
+                for(var a=0;a<ar.length;a++){
+                    for(var b=0;b<ar.length;b++){
+                        if(($("#"+row[a]+(b+1)+"> input").val())!=""){
+                        
+                        //console.log($("#"+row[a]+(b+1)+"> input").val());
+                        $("#"+row[a]+(b+1)+"> input").attr("readonly",true);
+                    }
+                    }
+                    
+                }
+            }
+            
+            function arrayGen(){
+                var basic_array=[[1,2,3],[4,5,6],[7,8,9]];
+                var mulArray_1=[[0,0,1],[1,0,0],[0,1,0]];
+                var mulArray_2=[[0,1,0],[0,0,1],[1,0,0]];
+                                
+                var radArray=new Array();
+                var num;
+                var temp;
+                for(var i=1;i<=9;i++){
+                    radArray.push(i);
+                }
+                for(var i=0;i<ar.length;i++){
+                    rnum=Math.floor((Math.random()*(9-1)+1));
+                    temp=radArray[i];
+                    radArray[i]=radArray[rnum];
+                    radArray[rnum]=temp;
+                }
+                basic_array[0][0]=radArray[0];
+                basic_array[0][1]=radArray[1];
+                basic_array[0][2]=radArray[2];
+                basic_array[1][0]=radArray[3];
+                basic_array[1][1]=radArray[4];
+                basic_array[1][2]=radArray[5];
+                basic_array[2][0]=radArray[6];
+                basic_array[2][1]=radArray[7];
+                basic_array[2][2]=radArray[8];
+                
+                for(var p=1;p<10;p++){
+                   for(var i=0;i<basic_array.length;i++){
+                        for(var j=0;j<basic_array.length;j++){
+                            
+                            for(var k=0;k<3;k++){
+                                if(p==1){
+                                    block_1[i][j]=basic_array[i][j];             }
+                                else if(p==2){
+                                    block_2[i][j]+=mulArray_2[i][k]*basic_array[k][j];
+                                 
+                                }
+                                else if(p==3){
+                                    block_3[i][j]+=mulArray_1[i][k]*basic_array[k][j];
+                                   //console.log(block_3[i][j]);
+                                }
+                                else if(p==4){
+                                    block_4[i][j]+=basic_array[i][k]*mulArray_1[k][j];
+                                    //console.log(block_4[i][j]);
+                                }
+                                else if(p==5){
+                                    block_5[i][j]+=block_2[i][k]*mulArray_1[k][j];
+                                    //console.log(block_5[i][j]);
+                                }
+                                else if(p==6){
+                                    block_6[i][j]+=block_3[i][k]*mulArray_1[k][j];
+                                   //console.log(block_6[i][j]);
+                                }
+                                else if(p==7){
+                                    block_7[i][j]+=basic_array[i][k]*mulArray_2[k][j];
+                                   //console.log(block_7[i][j]);
+                                }
+                                else if(p==8){
+                                    block_8[i][j]+=block_2[i][k]*mulArray_2[k][j];
+                                    //console.log(block_8[i][j]);
+                                }
+                                else if(p==9){
+                                    block_9[i][j]+=block_3[i][k]*mulArray_2[k][j];
+                                    //console.log(block_9[i][j]);
+                                }
+                            }
+                        }
+                   }
+                }
+                for(var i=0;i<1;i++){
+                    ar[i]=block_1[i].concat(block_2[i],block_3[i]);
+                    ar[i+1]=block_1[i+1].concat(block_2[i+1],block_3[i+1]);
+                    ar[i+2]=block_1[i+2].concat(block_2[i+2],block_3[2]);
+                    ar[i+3]=block_4[i].concat(block_5[i],block_6[i]);
+                    ar[i+4]=block_4[i+1].concat(block_5[i+1],block_6[i+1]);
+                    ar[i+5]=block_4[i+2].concat(block_5[i+2],block_6[i+2]);
+                    ar[i+6]=block_7[i].concat(block_8[0],block_9[0]);
+                    ar[i+7]=block_7[i+1].concat(block_8[i+1],block_9[i+1]);
+                    ar[i+8]=block_7[i+2].concat(block_8[i+2],block_9[i+2]);
+                }     
+                
+                var nanSu=[4,5,4,6,4,5,4,5,4];
+                var count=0;
+                while(nanSu.length !=0){
+                   
+                    //console.log(count);
+                var ranCount=Math.floor((Math.random()*nanSu.length));
+                var randomArray=[];
+                var add=nanSu[ranCount];
+                nanSu.splice(ranCount,1);
+                   
+                for(var i=0;i<add;i++){
+                    var ra=Math.floor((Math.random() * 9));
+                    if(randomArray.indexOf(ra)==-1){
+                        randomArray.push(ra);
+                        $("#"+row[count]+(ra+1)+"> input").val(ar[count][ra]);
+                           //console.log("#"+row[count]+(ra+1)+"> input");
+                    }
+                    else{
+                        i--;
+                    }
+                    //console.log($("#"+row[i]+(i+1)+"> input").val());    
+                }
+                 count++;
+                }
+                
+            }
+            function compare(key_loc){
+                var key_value=$("#"+key_loc).val();
+                
+            }
+            function correctAnswer(){
+                var zz=0;
+                $("table input").css("background","#ffffff");
+                var arrTemp=[];
+                
+                for(var i=0;i<9;i++){
+                    for(var j=0;j<9;j++){
+                        arrTemp.push($("#"+row[i]+(j+1)+"> input").val());
+                        
+                        if(arrTemp[j]==ar[i][j]){
+                            $("#"+row[i]+(j+1)+"> input").css("color","black");
+                            //console.log(ar[i][j]);
+                        }
+                    }
+                    arrTemp=[];
+                }
+                
+                
+                while(zz !=9 ){
+                    var rowArr=[];
+                    for(var i=1;i<=9;i++){
+                       rowArr.push($("#"+row[zz]+i+">input").val());
+                    }
+                    for(var i=0;i<=rowArr.length;i++){
+                        for(var j=0;j<rowArr.length;j++){
+                            if((i!=j)&rowArr[i] !=""){
+                                if(rowArr[j]==rowArr[i]){
+                                    for(var b=1;b<=10;b++){
+                                        $("#"+row[zz]+b+"> input").css("background","#A9F5A9");
+                                    }
+                                    $("#"+row[zz]+(i+1)+"> input").css("color","#ff0000");        
+                                    $("#"+row[zz]+(j+1)+"> input").css("color","#ff0000");
+                                    i=10;
+                                }
+                            }
+                        }
+                    }
+                    zz++;
+                }
+                z=1;
+                while(z!=10){
+                    var colArr=[];
+                    for(var i=0;i<9;i++){
+                        colArr.push($("#"+row[i]+z+">input").val());
+                    }
+                    for(var i=0;i<=colArr.length;i++){
+                        for(var j=0;j<colArr.length;j++){
+                            if((i!=j)&colArr[i] !=""){
+                                if(colArr[j]==colArr[i]){
+                                    for(var cc=0;cc<9;cc++){
+                                        $("#"+row[cc]+z+"> input").css("background","#A9F5A9");
+                                    }
+                                    $("#"+row[i]+z+"> input").css("color","#ff0000");
+                                    $("#"+row[j]+z+"> input").css("color","#ff0000");
+                                    
+                                }
+                            }
+                        }
+                    }
+                    z++;
+                }
+                
+                var xx=0;
+                var yy=1;
+                while(true){
+                    var cubeArray=[];
+                    for(var i=xx;i<(xx+3);i++){
+                        for(var j=yy;j<(yy+3); j++){
+                            cubeArray.push($("#"+row[i]+j+">input").val());
+                            var temp = j-1;
+                            if((temp !=0)&(temp % 3==0)&(j!=yy)){
+                                j=yy;
+                                break;
+                            }
+                        }
+                    }
+                    for(var ab=0;ab<cubeArray.length;ab++){
+                        for(var j=0;j<cubeArray.length;j++){
+                            if((cubeArray[ab]!="")&(ab!=j)&(cubeArray[ab]==cubeArray[j])){
+                                for(var a=xx;a<xx+3;a++){
+                                    for(var b=yy;b<yy+3;b++){
+                                        $("#"+row[a]+b+">input").css("background","#A9F5A9");
+                                    }
+                                    $("#"+row[Math.floor(ab/3)+xx]+((ab%3)+yy)+">input").css("color","#ff0000");
+                                }
+                            }
+                        }
+                    }
+                    cubeArray=[];
+                    if(yy!=7){
+                        yy=yy+3;
+                    }
+                    else{
+                        if(xx==6){
+                            break;
+                        }
+                        else{
+                            xx=xx+3;
+                            y=1;
+                        }
+                    }
+                }
+            }
+        </script>
+        <STYLE>
+		h2{
+			text-align:center;
+			
+		}
+		*{
+			padding:0;
+			margin:0;
+		}
+		.contents{
+			
+			background-color:Orange;
+			border-radius:30px;
+			box-shadow:20px 10px 10px #666666;
+		}
+		table{
+			background-color: white;
+			border-collapse:collapse;
+			BORDER : 3px solid black;
+			margin:auto;
+			
+			
+		}
+		div >  table input{
+			width : 36px;
+			height : 36px;
+			border:0px;
+			text-align:center;
+			font-size:20px
+			}
+		div >  table td{
+			//display: table-row;
+			//vertical-align:inherit;
+			border-color:inherit;
+			
+		}
+		div >  table td{
+			width : 42px;
+			height : 42px;	
+			BORDER: 1px solid black;
+			padding : 0;
+			text-align:center;
+			
+			vertical-align:top;
+			
+		}
+		#row3,#row6{
+			border-bottom : 3px solid black;
+		}
+		#A3, #A6, #B3, #B6, #C3, #C6, #D3, #D6, #E3, #E6, #F3, #F6, #G3, #G6, #H3, #H6, #I3, #I6{
+			border-right-width: 3px;
+		}	
+		#head{
+			border:3px solid orange;
+			border-radius:90px;
+		}	
+        /*input{
+            background-color: transparent;
+        }*/
+	</STYLE>
+    </head>
+
+<BODY>
+    
+	<br/>
+	<div id="head">
+	<h2 >SUDOKU~~! <br/></h2>
+	</div>
+	<br/>
+    <section class="contents" id="contents">
+    <br/>
+        <div id="time"></div>       
+	<div>
+	<TABLE >
+		<tr id="row1">
+			<td id="A1" class="u1 r1 c1"><input type="text" /></td>
+			<td id="A2" class="u1 r1 c2"><input type="text" /></td>
+			<td id="A3" class="u1 r1 c3"><input type="text" /></td>
+            
+			<td id="A4" class="u2 r1 c4"><input type="text"/></td>
+			<td id="A5" class="u2 r1 c5"><input type="text" /></td>
+			<td id="A6" class="u2 r1 c6"><input type="text" /></td>
+            
+			<td id="A7" class="u3 r1 c7"><input type="text" /></td>
+            <td id="A8" class="u3 r1 c8"><input type="text" /></td>
+			<td id="A9" class="u3 r1 c9"><input type="text" /></td>
+		</tr>
+
+		<tr id="row2">
+			<td id="B1" class="u1 r2 c1"><input type="text"/></td>
+			<td id="B2" class="u1 r2 c2"><input type="text" /></td>
+			<td id="B3" class="u1 r2 c3"><input type="text" /></td>
+            
+			<td id="B4" class="u2 r2 c4"><input type="text" /></td>
+			<td id="B5" class="u2 r2 c5"><input type="text"/></td>
+			<td id="B6" class="u2 r2 c6"><input type="text"/></td>
+            
+			<td id="B7" class="u3 r2 c7"><input type="text" /></td>
+			<td id="B8" class="u3 r2 c8"><input type="text" /></td>
+			<td id="B9" class="u3 r2 c9"><input type="text" /></td>
+		</tr>
+
+		<tr id="row3">
+			<td id="C1" class="u1 r3 c1"><input type="text" /></td>
+			<td id="C2" class="u1 r3 c2"><input type="text" /></td>
+			<td id="C3" class="u1 r3 c3"><input type="text" /></td>
+            
+			<td id="C4" class="u2 r3 c4"><input type="text" /></td>
+			<td id="C5" class="u2 r3 c5"><input type="text"/></td>
+			<td id="C6" class="u2 r3 c6"><input type="text" /></td>
+            
+			<td id="C7" class="u3 r3 c7"><input type="text" /></td>
+			<td id="C8" class="u3 r3 c8"><input type="text" /></td> 
+			<td id="C9" class="u3 r3 c9"><input type="text" /></td>
+		</tr>
+
+		<tr id="row4">
+			<td id="D1" class="u1 r4 c1"><input type="text" /></td>
+			<td id="D2" class="u1 r4 c2"><input type="text" /></td>
+			<td id="D3" class="u1 r4 c3"><input type="text" /></td>
+            
+			<td id="D4" class="u2 r4 c4"><input type="text" /></td>
+			<td id="D5" class="u2 r4 c5"><input type="text" /></td>
+			<td id="D6" class="u2 r4 c6"><input type="text" /></td>
+            
+			<td id="D7" class="u3 r4 c7"><input type="text" /></td>
+			<td id="D8" class="u3 r4 c8"><input type="text" /></td>
+			<td id="D9" class="u3 r4 c9"><input type="text" /></td>
+		</tr>
+		<tr id="row5">
+			<td id="E1" class="u1 r5 c1"><input type="text" /></td>
+			<td id="E2" class="u1 r5 c2"><input type="text"/></td>
+			<td id="E3" class="u1 r5 c3"><input type="text" /></td>
+            
+			<td id="E4" class="u2 r5 c4"><input type="text" /></td>
+			<td id="E5" class="u2 r5 c5"><input type="text" /></td>
+			<td id="E6" class="u2 r5 c6"><input type="text" /></td>
+            
+			<td id="E7" class="u3 r5 c7"><input type="text" /></td>
+			<td id="E8" class="u3 r5 c8"><input type="text"/></td>
+			<td id="E9" class="u3 r5 c9"><input type="text" /></td>
+		</tr>
+
+		<tr id="row6">
+			<td id="F1" class="u1 r6 c1"><input type="text" /></td>
+			<td id="F2" class="u1 r6 c2"><input type="text" /></td>
+			<td id="F3" class="u1 r6 c3"><input type="text" /></td>
+            
+			<td id="F4" class="u2 r6 c4"><input type="text" /></td>
+			<td id="F5" class="u2 r6 c5"><input type="text" /></td>
+			<td id="F6" class="u2 r6 c6"><input type="text" /></td>
+            
+			<td id="F7" class="u3 r6 c7"><input type="text" /></td>
+			<td id="F8" class="u3 r6 c8"><input type="text" /></td>
+			<td id="F9" class="u3 r6 c9"><input type="text" /></td>
+		</tr>
+
+		<tr id="row7">
+			<td id="G1" class="u1 r7 c1"><input type="text" /></td>
+			<td id="G2" class="u1 r7 c2"><input type="text" /></td>
+			<td id="G3" class="u1 r7 c3"><input type="text" /></td>
+            
+			<td id="G4" class="u2 r7 c4"><input type="text" /></td>
+			<td id="G5" class="u2 r7 c5"><input type="text" /></td>
+			<td id="G6" class="u2 r7 c6"><input type="text" /></td>
+            
+			<td id="G7" class="u3 r7 c7"><input type="text" /></td>
+			<td id="G8" class="u3 r7 c8"><input type="text" /></td>
+			<td id="G9" class="u3 r7 c9"><input type="text" /></td>
+		</tr>
+
+		<tr id="row8">
+			<td id="H1" class="u1 r8 c1"><input type="text" /></td>
+			<td id="H2" class="u1 r8 c2"><input type="text" /></td>
+			<td id="H3" class="u1 r8 c3"><input type="text" /></td>
+            
+			<td id="H4" class="u2 r8 c4"><input type="text"/></td>
+			<td id="H5" class="u2 r8 c5"><input type="text" /></td>
+			<td id="H6" class="u2 r8 c6"><input type="text" /></td>
+            
+			<td id="H7" class="u3 r8 c7"><input type="text" /></td>
+			<td id="H8" class="u3 r8 c8"><input type="text" /></td>
+			<td id="H9" class="u3 r8 c9"><input type="text" /></td>
+		</tr>
+		<tr id="row9">
+			<td id="I1" class="u1 r9 c1"><input type="text" /></td>
+			<td id="I2" class="u1 r9 c2"><input type="text" /></td>
+			<td id="I3" class="u1 r9 c3"><input type="text" /></td>
+            
+			<td id="I4" class="u2 r9 c4"><input type="text" /></td>
+			<td id="I5" class="u2 r9 c5"><input type="text" /></td>
+			<td id="I6" class="u2 r9 c6"><input type="text" /></td>
+            
+			<td id="I7" class="u3 r9 c7"><input type="text" /></td>
+			<td id="I8" class="u3 r9 c8"><input type="text" /></td>
+			<td id="I9" class="u3 r9 c9"><input type="text" /></td>
+		</tr>
+</TABLE>
+</div>
+<br/>
+</section>
+</BODY>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function doSubmit(){
+		
+		var name = document.getElementById("name");
+		if(name.value !== "michael"){
+			event.preventDefault();
+		}		
+	}
+	function validateForm(){
+		var countryTp = document.getElementsByTagName("input");
+		var countryTp1 = document.getElementsByName("countryTp");
+		var isChecked =false;
+		var name = document.getElementById("name");
+		var first = document.getElementById("first");
+		
+		//console.dir(countryTp);
+		for(var i=0 ; i<countryTp.length; i++){
+			if(countryTp[i].checked){
+				isChecked!=isChecked;
+				
+			}
+		}
+		for(var i=0;i<countryTp1.length;i++){
+			if(countryTp1[i].dataset.validation =="Y" && countryTp1[i].checked){
+				isChecked!=isChecked;
+			}
+			if(isChecked){
+				countryTp1[i].focus();			
+			}
+			
+		}
+		
+		//console.dir(countryTp);
+	}
+	
+</script>
+</head>
+<body>
+	<form action="/action_page.php">
+		First Name: <br/><input type = "text" id="first" name="firstname" placeholder="예)홍" required data-validation="Y">
+		<br/>
+		Last Name: <br>
+		<input type = "text" id="name" name="lastname" placeholder="예)길동" ><br>
+		<br>
+		<hr>
+		<input type ="radio" id="native" name="countryTp" value="native" data-validation="Y">내국인 
+		<input type ="radio" id="foreigner" name="countryTp" value="foreigner" data-validation="Y">외국인<br/>
+		색상: <input type ="color" id="color" value="#ff0000">
+		연도/월/일: <input type ="date" >
+		<input type ="selet">
+		<hr/>
+		<input type="button" value="유효성체크" onclick="validateForm();">
+		<input type="submit" value="submit" >
+		 
+	</form>
+
+</body>
+</html>
