@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	var g_title="global";
+	
+	function outer(){
+		var oVar = 1;
+		var iVar = 2;
+		var g_title="outer";
+		function inner(){
+			var g_title="inner";
+			console.log(oVar);
+			console.log(g_title);
+			console.log(iVar);
+		}
+	}
+	function outer2(){
+		console.log(oVar);
+		
+	}
+	
+	function closureTest(pName){
+		var name = pName;
+		function getName(){
+			return name;			
+		}
+		return getName;
+	}
+	(function(){
+		var test = closureTest("홍길동");
+		var test1 = closureTest("임꺽정");
+		console.log(test());
+		console.log(test1());
+	})();
+</script>
+</head>
+<body>
+
+</body>
+</html>

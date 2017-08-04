@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	
+	(function(option){
+		var nameArr = [];
+		var ageArr = new Array();
+		nameArr[0] =1;
+		nameArr[1] =2;
+		nameArr[2] ={name: "홍길동"};
+		nameArr.description = "배열 연습";
+		nameArr['subDescription'] = "배열 연습2";
+		console.log(nameArr.description);
+		
+		var defaultOption = {color:"red",
+							width:"100px",
+							height:"100%"};
+		var opt=option||defaultOption;
+		
+		console.log(opt);
+		
+// 		var number = 1;
+// 		number.desc="1234";
+// 		console.log(number.desc);
+// 		var title="hello";
+// 		title.desc="abcdefg";
+// 		console.log(title.desc);
+// 		nameArr.push("홍길동");
+// 		nameArr.push("임꺽정");
+// 		ageArr.push(15);
+// 		ageArr.push(30);
+// 		console.log(nameArr.pop());
+// 		console.log(nameArr.pop());
+// 		console.log(ageArr.pop());
+ 		//console.log(ageArr.pop());
+	})();
+</script>
+</head>
+<body>
+
+</body>
+</html>

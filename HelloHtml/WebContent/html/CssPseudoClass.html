@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	div{
+		border : 10px solid #00ff00;
+	}
+	p{
+		
+		background-color : yellow;
+		padding : 20px;
+	}
+	div:active p{
+		display : block;
+	}
+	
+	h1#first_title:hover{
+		color : red;
+	}
+	h1#second_title:hover{
+		color : blue;
+	}
+	#contents h1#third_title:hover{
+		color : yellow;
+	}
+	body#contents h1#third_title:hover{
+		color : hotpink;
+	}
+	input:checked{
+		width:30px;
+		height:30px;
+	}
+	input[type="text"]:disabled{
+		background-color:gray;
+	}
+	form#send_data_form input[data-validation="Y"]{
+		background-color:red;
+	}	
+	form#send_data_form *:focus{
+		background-color:yellow;
+	}	
+	p:nth-child(even){
+		color:hotpink;
+		background-color:cyan;
+	}
+</style>
+</head>
+<body id="contents">
+	<p>p1</p>
+	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+	<p>p6</p>
+	<p>p7</p>
+	<div>
+		<p>p1</p>
+		<p>p2</p>
+		<p>p3</p>
+		<p>p4</p>
+		
+	</div>
+	<br/>
+	<div>
+		<p>p1</p>
+		<p>p2</p>
+		<p>p3</p>
+		<p>p4</p>
+	</div>
+	<h1 id="first_title">반응 선택자</h1>
+	<h1 id="second_title">반응 선택자</h1>
+	<h1 id="third_title">반응 선택자</h1>
+	<form id="send_data_form">
+		<input type ="checkbox">male
+		<input type ="checkbox">female
+		<br/>
+		<input type ="radio" name="gender">male
+		<input type ="radio" name="gender">female
+		<br/>
+		<input type ="text" data-validation="Y" value="country">
+		<input type ="text" value="country">
+		<input type ="text" value="country">
+	</form>
+	
+
+	
+</body>
+</html>
