@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+body{
+	font-family:Verdana, sans-serif;
+	font-size : 0.9em;
+}
+header, footer{
+	padding :10px;
+	color : white;
+	background-color: black;
+}
+section {
+	margin : 5px;
+	padding : 10px;
+
+}
+article{
+	border : 5px dotted green;
+	margin : 5px;
+	padding : 10px;
+	background-color : white;
+	position : relative; 
+	overflow : scroll;
+}
+section > article > div.positionRelative{
+	border : 1px dotted green;
+	width : 100px;
+	height : 100px;
+	display : block;
+	position : relative;
+	left : 10px;
+	top : 10px;
+}
+section > article > div.positionAbsolute{
+	border : 1px solid magenta;
+	width : 100px;
+	height : 100px;
+	display : block;
+	position : absolute;
+	top : 10px;
+	left : 10px;
+}
+section > article > div.positionFixed{
+	border : 1px solid lightgreen;
+	width : 100px;
+	height : 100px;
+	display : block;
+	position : fixed;
+	top :50%;
+	left : 50%;
+}
+h1{
+	font-size:inherit;
+}
+section > article > div.divRed{
+	width: 100px;
+	height: 100px;
+	background-color : red;
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	z-index : 3;
+	
+}
+section > article > div.divGreen{
+	width: 100px;
+	height: 100px;
+	background-color : Green;
+	position : absolute;
+	left : 55px;
+	top : 55px;
+	z-index : 2;
+}
+section > article > div.divBlue{
+	width: 100px;
+	height: 100px;
+	background-color : Blue;
+	position : absolute;
+	left : 105px;
+	top : 105px;
+	z-index : 1;
+}
+
+</style>
+</head>
+<body>
+	<header>
+		<h1 >css position attribute</h1>
+	</header>
+	<section>
+		<article>
+			<div class="positionRelative">relative</div>
+			<div class="positionAbsolute">absolute</div>
+			<div >div3</div>
+		</article>
+	</section>
+	<section>
+		<article>
+			<p>동해미아ㅓ리ㅏㅓㅣ나어ㅣㅏ러나ㅣ</p>
+			<div class="divRed"></div>
+			<div class="divGreen"></div>
+			<div class="divBlue"></div>
+			<p>동해미아ㅓ리ㅏㅓㅣ나어ㅣㅏ러나ㅣ</p>
+		</article>
+	</section>
+	
+</body>
+</html>
