@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Prototype</title>
+<script>
+(function(){
+// 	console.log(add(1,2));
+// 	console.log(plus(2,4));
+		
+	function add(x,y){
+		return x+y;
+	}		
+	var plus = function(x,y){
+		return x+y;		
+	};
+		
+// 	console.log(add(1,2));
+// 	console.log(plus(2,4));
+		
+	function Car(wheelCnt,manufacturer,speed){
+		var maxSpeed = 200;
+		var counter = 0;
+		this.wheelCnt=wheelCnt;//this=property
+		this.manufacturer=manufacturer,speed;
+		this.speed=speed;
+		this.speedUp=function(){			
+			console.log(counter++);
+			var innerCounter=0;
+			innerCounter++;
+			if(this.speed>=maxSpeed){
+				console.log("최대 스피드 초과");
+				return;
+			}
+			this.speed++;
+		}
+		
+	}
+	var k5 = new Car(4,"kia",80);
+	var k3 = new Car(4,"kia",95);
+	var sm5 = new Car(4,"samsung",100);
+	sm5.speedDown = function(){
+		this.speed=this.speed-2;
+	}
+	Car.prototype.speedDown = function(){//prototype으로 메소드 생성 가능/지역변수 사용 안할시에
+		this.speed--;
+	}
+	sm5.speedDown();
+	k5.speedDown();
+	console.log(sm5.speed);
+	console.log(k5.speed);
+	console.dir(sm5);
+    
+    function person(pName, pAge){
+        var userName = pName;
+        var age = pAge;
+        function setUserName(name){
+            userName = name;
+        }
+        function getUserName(){
+            return userName;
+        }
+        
+        return {setUserName:setUserName,getUserName:getUserName};
+    }
+    var person1 = person("홍길동",345);
+    var person2 = person("임꺽정",487);
+    console.dir(person1);
+    console.log(person2.getUserName());
+    person.apply(person1);
+})();
+
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>
