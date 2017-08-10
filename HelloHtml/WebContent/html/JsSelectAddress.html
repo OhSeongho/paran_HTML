@@ -1,58 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF8">
 <title>JsSelectAddress</title>
 <style type="text/css">
 
 </style>
 <script type="text/javascript">
-
-var addressObj={
-    "address":[
-        {"id":"0","pid":"","nameSiDo":"-선택-"},
-        {"id":"1","pid":"","nameSiDo":"서울특별시"},
-        {"id":"2","pid":"","nameSiDo":"-대전광역시-"},
-        {"id":"3","pid":"","nameSiDo":"-대구광역시-"},
-        {"id":"4","pid":"","nameSiDo":"-광주광역시-"},
-        {"id":"5","pid":"","nameSiDo":"-부산광역시-"},
-        {"id":"6","pid":"","nameSiDo":"-울산광역시-"},
-        {"id":"7","pid":"","nameSiDo":"-경기도-"},
-        {"id":"8","pid":"","nameSiDo":"-강원도-"},
-        {"id":"9","pid":"","nameSiDo":"-충청남도-"},
-        {"id":"10","pid":"","nameSiDo":"-충청북도-"},
-        {"id":"11","pid":"","nameSiDo":"-경상남도-"},
-        {"id":"12","pid":"","nameSiDo":"-경상북도-"},
-        {"id":"13","pid":"","nameSiDo":"-전라남도-"},
-        {"id":"14","pid":"","nameSiDo":"-전라북도-"},
-        {"id":"15","pid":"","nameSiDo":"-제주도-"},
-        {"id":"00","pid":"0","nameSiGoonGu":"-선택-"},
-        {"id":"11","pid":"1","nameSiGoonGu":"순천시"},
-        {"id":"12","pid":"1","nameSiGoonGu":"광양시"},
-        {"id":"111","pid":"11","nameSiGoonGu":"매곡동"},
-        {"id":"112","pid":"11","nameSiGoonGu":"중앙동"},
-        {"id":"113","pid":"11","nameSiGoonGu":"향동"}
-    ]
-};
-    (function(){
+var ShowAddress = function(selectId){
+    var selectId=selectId;
+    var addressObj={
+        "address":[
+            {"id":"000000","pid":"","name":"선택"},
+            {"id":"100000","pid":"","name":"서울특별시"},
+            {"id":"200000","pid":"","name":"대전광역시"},
+            {"id":"300000","pid":"","name":"대구광역시"},
+            {"id":"400000","pid":"","name":"광주광역시"},
+            {"id":"500000","pid":"","name":"부산광역시"},
+            {"id":"600000","pid":"","name":"울산광역시"},
+            {"id":"700000","pid":"","name":"경기도"},
+            {"id":"800000","pid":"","name":"강원도"},
+            {"id":"900000","pid":"","name":"충청남도"},
+            {"id":"100000","pid":"","name":"충청북도"},
+            {"id":"1000010000","pid":"","name":"경상남도"},
+            {"id":"120000","pid":"","name":"경상북도"},
+            {"id":"130000","pid":"","name":"전라남도"},
+            {"id":"140000","pid":"","name":"전라북도"},
+            {"id":"150000","pid":"","name":"제주도"},
+            {"id":"000000","pid":"000000","name":"선택"},
+            {"id":"100001","pid":"100000","name":"종로구"},
+            {"id":"100002","pid":"100000","name":"중구"},
+            {"id":"100003","pid":"100000","name":"성동구"},
+            {"id":"100004","pid":"100000","name":"광진구"},
+            {"id":"100005","pid":"100000","name":"동대문구"},
+            {"id":"100006","pid":"100000","name":"중랑구"},
+            {"id":"100007","pid":"100000","name":"성북구"},
+            {"id":"100008","pid":"100000","name":"강북구"},
+            {"id":"100009","pid":"100000","name":"도봉구"},
+            {"id":"100010","pid":"100000","name":"노원구"},
+            {"id":"100011","pid":"100000","name":"은평구"},
+            {"id":"100012","pid":"100000","name":"서대문구"},
+            {"id":"100013","pid":"100000","name":"마포구"},
+            {"id":"100014","pid":"100000","name":"양천구"},
+            {"id":"100015","pid":"100000","name":"강서구"},
+            {"id":"100016","pid":"100000","name":"구로구"},
+            {"id":"100017","pid":"100000","name":"금천구"},
+            {"id":"100018","pid":"100000","name":"영등포구"},
+            {"id":"100019","pid":"100000","name":"동작구"},
+            {"id":"100020","pid":"100000","name":"관악구"},
+            {"id":"100021","pid":"100000","name":"서초구"},
+            {"id":"100022","pid":"100000","name":"강남구"},
+            {"id":"100023","pid":"100000","name":"송파구"},
+            {"id":"100024","pid":"100000","name":"강동구"},
+            
+            
+            {"id":"12","pid":"1","name":"광양시"},
+            {"id":"1000011","pid":"100001","name":"매곡동"},
+            {"id":"1000012","pid":"100001","name":"중앙동"},
+            {"id":"1000013","pid":"100001","name":"향동"}
+        ]
+    };
+    this.initial = function(){
+        var select=document.getElementById(selectId[0]);
         var addressArray = addressObj.address;
-        var getSelectName=document.getElementById("siDo");
-        var option=document.createElement("option");
-        console.dir(option);
-        option.nodeValue
         for(var i=0;i<addressArray.length;i++){
-            option.nodeValue[i]=addressArray[i].id;
-            getSelectName.add(option);
+            var option = document.createElement("option");
+            if(addressArray[i].pid==""){
+                option.value=addressArray[i].id;
+                option.text=addressArray[i].name;
+                select.add(option,i);
+             }
         }
-//        var getId=document.getElementsByName("siDo");
-//        var addOption=document.createAttribute("option");
-//        for(var i=0;i<addressArray.length;i++){
-//            addOption.value=addressArray.push(i);
-//            addOption.text=addressArray.push(i);
-//            getId.option.addOption;
-//        }
-    })();
+        select.addEventListener("click",console.log(select.value))
+    }
+    function getValue(id,pid){
+        var id=id;
+        var pid
+    }
+}
 
+
+window.onload=function(){
+    var selectId=new ShowAddress(["siDo","siGoonGu","menoDong","gill"]);
+    console.log(selectId);
+    selectId.initial();
+    
+}
 </script>
 </head>
 <body>
