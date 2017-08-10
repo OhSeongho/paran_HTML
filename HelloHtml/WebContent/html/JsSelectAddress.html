@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JsSelectAddress</title>
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+var addressObj={
+    "address":[
+        {"id":"0","pid":"","nameSiDo":"-선택-"},
+        {"id":"1","pid":"","nameSiDo":"서울특별시"},
+        {"id":"2","pid":"","nameSiDo":"-대전광역시-"},
+        {"id":"3","pid":"","nameSiDo":"-대구광역시-"},
+        {"id":"4","pid":"","nameSiDo":"-광주광역시-"},
+        {"id":"5","pid":"","nameSiDo":"-부산광역시-"},
+        {"id":"6","pid":"","nameSiDo":"-울산광역시-"},
+        {"id":"7","pid":"","nameSiDo":"-경기도-"},
+        {"id":"8","pid":"","nameSiDo":"-강원도-"},
+        {"id":"9","pid":"","nameSiDo":"-충청남도-"},
+        {"id":"10","pid":"","nameSiDo":"-충청북도-"},
+        {"id":"11","pid":"","nameSiDo":"-경상남도-"},
+        {"id":"12","pid":"","nameSiDo":"-경상북도-"},
+        {"id":"13","pid":"","nameSiDo":"-전라남도-"},
+        {"id":"14","pid":"","nameSiDo":"-전라북도-"},
+        {"id":"15","pid":"","nameSiDo":"-제주도-"},
+        {"id":"00","pid":"0","nameSiGoonGu":"-선택-"},
+        {"id":"11","pid":"1","nameSiGoonGu":"순천시"},
+        {"id":"12","pid":"1","nameSiGoonGu":"광양시"},
+        {"id":"111","pid":"11","nameSiGoonGu":"매곡동"},
+        {"id":"112","pid":"11","nameSiGoonGu":"중앙동"},
+        {"id":"113","pid":"11","nameSiGoonGu":"향동"}
+    ]
+};
+    (function(){
+        var addressArray = addressObj.address;
+        var getSelectName=document.getElementById("siDo");
+        var option=document.createElement("option");
+        console.dir(option);
+        option.nodeValue
+        for(var i=0;i<addressArray.length;i++){
+            option.nodeValue[i]=addressArray[i].id;
+            getSelectName.add(option);
+        }
+//        var getId=document.getElementsByName("siDo");
+//        var addOption=document.createAttribute("option");
+//        for(var i=0;i<addressArray.length;i++){
+//            addOption.value=addressArray.push(i);
+//            addOption.text=addressArray.push(i);
+//            getId.option.addOption;
+//        }
+    })();
+
+</script>
+</head>
+<body>
+	<form id="address" method ="post">
+        <legend>주소</legend>
+		<select id="siDo" name="siDo">
+        </select>
+            
+		<select id="siGoonGu"></select>
+		<select id="meonDong"></select>
+		<select id="gill"></select>
+	</form>
+</body>
+</html>
