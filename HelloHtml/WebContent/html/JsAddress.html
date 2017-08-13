@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF8">
+<title>JsSelectAddress</title>
+<style type="text/css">
+    form{
+        border: 1px solid black;
+        width: auto;
+        height: 400px;
+    }
+    
+</style>
+<script type="text/javascript">
+var ShowAddress = function(selectId){
+    var selectId=selectId;
+    var addressObj={
+        "address":[
+            
+            {"id":"1000","pid":"","name":"서울특별시"},
+            {"id":"2000","pid":"","name":"대전광역시"},
+            {"id":"3000","pid":"","name":"대구광역시"},
+            {"id":"4000","pid":"","name":"광주광역시"},
+            {"id":"5000","pid":"","name":"부산광역시"},
+            {"id":"6000","pid":"","name":"울산광역시"},
+            {"id":"7000","pid":"","name":"경기도"},
+            {"id":"8000","pid":"","name":"강원도"},
+            {"id":"9000","pid":"","name":"충청남도"},
+            {"id":"10000","pid":"","name":"충청북도"},
+            {"id":"11000","pid":"","name":"경상남도"},
+            {"id":"12000","pid":"","name":"경상북도"},
+            {"id":"13000","pid":"","name":"전라남도"},
+            {"id":"14000","pid":"","name":"전라북도"},
+            {"id":"15000","pid":"","name":"제주도"},
+            
+            {"id":"11000","pid":"1000","name":"종로구"},
+            {"id":"11100","pid":"11000","name":"청운효자동"},
+            {"id":"11200","pid":"11000","name":"사직동"},
+            {"id":"11300","pid":"11000","name":"삼청동"},
+            {"id":"11400","pid":"11000","name":"부암동"},
+            {"id":"11500","pid":"11000","name":"평창동"},
+            {"id":"11600","pid":"11000","name":"무악동"},
+            {"id":"11700","pid":"11000","name":"교남동"},
+            {"id":"11800","pid":"11000","name":"가회동"},
+            
+            {"id":"12000","pid":"1000","name":"중구"},
+            {"id":"13000","pid":"1000","name":"성동구"},
+            {"id":"14000","pid":"1000","name":"광진구"},
+            {"id":"15000","pid":"1000","name":"동대문구"},
+            {"id":"16000","pid":"1000","name":"중랑구"},
+            {"id":"17000","pid":"1000","name":"성북구"},
+            {"id":"18000","pid":"1000","name":"강북구"},
+            {"id":"19000","pid":"1000","name":"도봉구"},
+            {"id":"110000","pid":"1000","name":"노원구"},
+            {"id":"111000","pid":"1000","name":"은평구"},
+            {"id":"112000","pid":"1000","name":"서대문구"},
+            {"id":"113000","pid":"1000","name":"마포구"},
+            {"id":"114000","pid":"1000","name":"양천구"},
+            {"id":"115000","pid":"1000","name":"강서구"},
+            {"id":"116000","pid":"1000","name":"구로구"},
+            {"id":"117000","pid":"1000","name":"금천구"},
+            {"id":"118000","pid":"1000","name":"영등포구"},
+            {"id":"119000","pid":"1000","name":"동작구"},
+            {"id":"120000","pid":"1000","name":"관악구"},
+            {"id":"121000","pid":"1000","name":"서초구"},
+            {"id":"122000","pid":"1000","name":"강남구"},
+            {"id":"123000","pid":"1000","name":"송파구"},
+            {"id":"124000","pid":"1000","name":"강동구"},
+            
+            {"id":"21000","pid":"2000","name":"중구"},
+            {"id":"22000","pid":"2000","name":"서구"},
+            {"id":"23000","pid":"2000","name":"동구"},
+            {"id":"24000","pid":"2000","name":"유성구"},
+            {"id":"25000","pid":"2000","name":"대덕구"},
+            {"id":"26000","pid":"2000","name":"북구"},
+            
+            {"id":"211000","pid":"21000","name":"은행선화동"},
+            {"id":"212000","pid":"21000","name":"목동"},
+            {"id":"213000","pid":"21000","name":"중촌동"},
+            {"id":"214000","pid":"21000","name":"대흥동"},
+            {"id":"215000","pid":"21000","name":"문창동"},
+            {"id":"216000","pid":"21000","name":"석교동"},
+            {"id":"217000","pid":"21000","name":"대사동"},
+            {"id":"218000","pid":"21000","name":"부사동"},
+            {"id":"219000","pid":"21000","name":"용두동"},
+            {"id":"2110000","pid":"21000","name":"오류동"},
+            {"id":"2111000","pid":"21000","name":"태평1동"},
+            {"id":"2112000","pid":"21000","name":"태평2동"},
+            {"id":"2113000","pid":"21000","name":"태평3동"},
+            {"id":"2114000","pid":"21000","name":"유천1동"},
+            {"id":"2115000","pid":"21000","name":"유천2동"},
+            {"id":"2116000","pid":"21000","name":"문화1동"},
+            {"id":"2117000","pid":"21000","name":"문화2동"},
+            {"id":"2118000","pid":"21000","name":"산성동"},
+            
+            {"id":"131000","pid":"13000","name":"순천시"},
+            
+            {"id":"1311000","pid":"131000","name":"승주읍"},
+            {"id":"1312000","pid":"131000","name":"주암면"},
+            {"id":"1313000","pid":"131000","name":"송광면"},
+            {"id":"1314000","pid":"131000","name":"외서면"},
+            {"id":"1315000","pid":"131000","name":"낙안면"},
+            {"id":"1316000","pid":"131000","name":"별량면"},
+            {"id":"1317000","pid":"131000","name":"상사면"},
+            {"id":"1318000","pid":"131000","name":"해룡면"},
+            {"id":"1319000","pid":"131000","name":"서면"},
+            {"id":"13110000","pid":"131000","name":"황전면"},
+            {"id":"13111000","pid":"131000","name":"월등면"},
+            {"id":"1311200","pid":"131000","name":"향동"},
+            {"id":"1311300","pid":"131000","name":"매곡동"},
+            {"id":"1311400","pid":"131000","name":"삼산동"},
+            {"id":"13115000","pid":"131000","name":"조곡동"},
+            {"id":"13116000","pid":"131000","name":"덕연동"},
+            {"id":"13117000","pid":"131000","name":"풍덕동"},
+            {"id":"13118000","pid":"131000","name":"남제동"},
+            {"id":"13119000","pid":"131000","name":"저전동"},
+            {"id":"13120000","pid":"131000","name":"장천동"},
+            {"id":"13121000","pid":"131000","name":"중앙동"},
+            {"id":"13122000","pid":"131000","name":"도사동"},
+            {"id":"13123000","pid":"131000","name":"왕조1동"},
+            {"id":"13124000","pid":"131000","name":"왕조2동"},
+            
+            {"id":"13191000","pid":"1319000","name":"문화마을"},
+            {"id":"13192000","pid":"1319000","name":"선평리"},
+            {"id":"13193000","pid":"1319000","name":"학구리"},
+            {"id":"13194000","pid":"1319000","name":"구만리"},
+            {"id":"13195000","pid":"1319000","name":"대구리"},
+            {"id":"13196000","pid":"1319000","name":"판교리"},
+    
+            
+            
+            {"id":"132000","pid":"13000","name":"광양시"},
+            {"id":"133000","pid":"13000","name":"여수시"},
+            
+            {"id":"1331000","pid":"133000","name":"돌산읍"},
+            {"id":"1332000","pid":"133000","name":"소라면"},
+            {"id":"1333000","pid":"133000","name":"율촌면"},
+            {"id":"1334000","pid":"133000","name":"화양면"},
+            {"id":"1335000","pid":"133000","name":"남면"},
+            {"id":"1336000","pid":"133000","name":"화정면"},
+            {"id":"1337000","pid":"133000","name":"삼산면"},
+            {"id":"1338000","pid":"133000","name":"동문동"},
+            {"id":"1339000","pid":"133000","name":"한려동"},
+            {"id":"13310000","pid":"133000","name":"중앙동"},
+            {"id":"13311000","pid":"133000","name":"충무동"},
+            {"id":"13312000","pid":"133000","name":"광림동"},
+            {"id":"13313000","pid":"133000","name":"서강동"},
+            {"id":"13314000","pid":"133000","name":"대교동"},
+            {"id":"13315000","pid":"133000","name":"국동"},
+            {"id":"13316000","pid":"133000","name":"월호동"},
+            {"id":"13317000","pid":"133000","name":"여서동"},
+            {"id":"13318000","pid":"133000","name":"문수동"},
+            {"id":"13319000","pid":"133000","name":"미평동"},
+            {"id":"13320000","pid":"133000","name":"둔덕동"},
+            {"id":"13321000","pid":"133000","name":"만덕동"},
+            {"id":"13322000","pid":"133000","name":"쌍봉동"},
+            {"id":"13323000","pid":"133000","name":"시전동"},
+            {"id":"13324000","pid":"133000","name":"여천동"},
+            {"id":"13325000","pid":"133000","name":"주삼동"},
+            {"id":"13326000","pid":"133000","name":"삼일동"},
+            {"id":"13327000","pid":"133000","name":"묘도동"},
+            
+            
+            {"id":"134000","pid":"13000","name":"나주시"},
+            {"id":"135000","pid":"13000","name":"목포시"},
+            {"id":"136000","pid":"13000","name":"신안군"},
+            {"id":"137000","pid":"13000","name":"구례군"},
+            {"id":"138000","pid":"13000","name":"화순군"},
+            {"id":"139000","pid":"13000","name":"담양군"},
+            
+        ]
+    };
+    for(var i=0;i<selectId.length;i++){
+        var getId=document.getElementById(selectId[i]);
+        addFirstOption(getId);
+    }
+    this.initial = function(){
+        var select=document.getElementById(selectId[0]);
+        var addressArray = addressObj.address;
+        var selectValue;
+        for(var i=0;i<addressArray.length;i++){
+            var option = document.createElement("option");
+            if(addressArray[i].pid==""){
+                option.value=addressArray[i].id;
+                option.text=addressArray[i].name;
+                select.add(option);
+             }              
+        }
+        select.addEventListener("change",function(){
+            var selValue=select.options[select.selectedIndex].value;
+            for(var i=1;i<selectId.length;i++){
+                document.getElementById(selectId[i]).length=1;
+            }
+            var index=0;
+           changeSelect(selValue,index+1);
+        })
+        
+        
+    }
+    
+    function changeSelect(value,index){
+        var selectValue=value;
+        var index = index;
+        var targetSelect=document.getElementById(selectId[index]);
+        var childArray=makeChildArray(selectValue);
+        addAddressOption(selectValue,childArray,targetSelect);
+        index=index+1;
+        targetSelect.addEventListener("change",function(){
+            var selValue=targetSelect.options[targetSelect.selectedIndex].value;
+            for(var i=index;i<selectId.length;i++){
+                document.getElementById(selectId[i]).length=1;
+            }
+            if(index<selectId.length){
+                changeSelect(selValue,index);
+            }else {                
+                return
+            }
+        })
+    }
+    
+    function makeChildArray(value){
+    	var childArray = new Array();
+    	var parentsValue = value;
+    	for(var i=0;i<addressObj.address.length;i++){
+    		if(parentsValue == addressObj.address[i].pid){
+    			childArray[i]=addressObj.address[i];
+    		}
+//            else{
+//    		}
+    	}
+    	childArray = childArray.filter(function(element){
+    		return element !==undefined;
+    	})
+    	
+    	return childArray;
+    }
+    
+    function addAddressOption(value, array,target){
+    	var value=value;
+        var childArray=array;
+        var targetSelect=target;
+        for(var sdel in array){
+            if(value!=""){
+                var option = document.createElement("option");
+                option.value=childArray[sdel].id;
+                option.text=childArray[sdel].name;           targetSelect.add(option);
+            }
+        }
+    }
+    
+    function addFirstOption(id){
+        var addOption = document.createElement("option");
+        var id=id;
+        addOption.value="";
+        addOption.text="-선택-";
+        id.add(addOption);
+    }
+}
+window.onload=function(){
+    var selectId=new ShowAddress(["siDo","siGoonGu","meonDong","gill"]);
+    selectId.initial();
+}
+</script>
+</head>
+<body>
+	<form id="address" method ="post">
+        <legend>주소</legend>
+		<select id="siDo" name="siDo" ></select>
+		<select id="siGoonGu" name="siGoonGu"></select>
+		<select id="meonDong" name="meonDong"></select>
+		<select id="gill" name="gill"></select>
+        <input type="text">
+	</form>
+    
+</body>
+</html>
