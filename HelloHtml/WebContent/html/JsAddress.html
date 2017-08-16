@@ -13,7 +13,7 @@
 </style>
 <script type="text/javascript">
 var ShowAddress = function(selectId){
-    var selectId=selectId;
+
     var addressObj={
         "address":[
             
@@ -126,8 +126,6 @@ var ShowAddress = function(selectId){
             {"id":"13194000","pid":"1319000","name":"구만리"},
             {"id":"13195000","pid":"1319000","name":"대구리"},
             {"id":"13196000","pid":"1319000","name":"판교리"},
-    
-            
             
             {"id":"132000","pid":"13000","name":"광양시"},
             {"id":"133000","pid":"13000","name":"여수시"},
@@ -160,7 +158,6 @@ var ShowAddress = function(selectId){
             {"id":"13326000","pid":"133000","name":"삼일동"},
             {"id":"13327000","pid":"133000","name":"묘도동"},
             
-            
             {"id":"134000","pid":"13000","name":"나주시"},
             {"id":"135000","pid":"13000","name":"목포시"},
             {"id":"136000","pid":"13000","name":"신안군"},
@@ -174,7 +171,7 @@ var ShowAddress = function(selectId){
         var getId=document.getElementById(selectId[i]);
         addFirstOption(getId);
     }
-    this.initial = function(){
+    this.initialize = function(){
         var select=document.getElementById(selectId[0]);
         var addressArray = addressObj.address;
         var selectValue;
@@ -187,63 +184,58 @@ var ShowAddress = function(selectId){
              }              
         }
         select.addEventListener("change",function(){
-            var selValue=select.options[select.selectedIndex].value;
+            var selValue=this.options[this.selectedIndex].value;
             for(var i=1;i<selectId.length;i++){
                 document.getElementById(selectId[i]).length=1;
             }
             var index=0;
-           changeSelect(selValue,index+1);
-        })
-        
-        
-    }
+            setChangeEntHandlerToSelectTag(selValue,index+1);
+        });
+    };
     
-    function changeSelect(value,index){
-        var selectValue=value;
-        var index = index;
+    function setChangeEntHandlerToSelectTag(value,index){
         var targetSelect=document.getElementById(selectId[index]);
-        var childArray=makeChildArray(selectValue);
-        addAddressOption(selectValue,childArray,targetSelect);
-        index=index+1;
+        var childArray=getChildNodesById(value);
+        makeOptionsWithChildNodes(value,childArray,targetSelect);
+        index++;
         targetSelect.addEventListener("change",function(){
             var selValue=targetSelect.options[targetSelect.selectedIndex].value;
             for(var i=index;i<selectId.length;i++){
                 document.getElementById(selectId[i]).length=1;
             }
             if(index<selectId.length){
-                changeSelect(selValue,index);
+            	setChangeEntHandlerToSelectTag(selValue,index);
             }else {                
-                return
+                return;
             }
         })
     }
     
-    function makeChildArray(value){
+    /*********************************************************************
+    * function name : getChildNodesById
+    * description : pId=node.pid인 노드들을 찾아서 Array 형태로 반환
+    *               pId에 해당하는 자식 노드들을 찾아서 Array 형태로 반환  
+    * params
+    	1. pId : node의 id
+    * return type : Array	
+    **********************************************************************/
+    function getChildNodesById(pId){
     	var childArray = new Array();
-    	var parentsValue = value;
     	for(var i=0;i<addressObj.address.length;i++){
-    		if(parentsValue == addressObj.address[i].pid){
-    			childArray[i]=addressObj.address[i];
+    		if(pId == addressObj.address[i].pid){
+    			childArray.push(addressObj.address[i]);
     		}
-//            else{
-//    		}
     	}
-    	childArray = childArray.filter(function(element){
-    		return element !==undefined;
-    	})
-    	
     	return childArray;
     }
-    
-    function addAddressOption(value, array,target){
-    	var value=value;
-        var childArray=array;
-        var targetSelect=target;
+   
+    function makeOptionsWithChildNodes(value, array,target){
         for(var sdel in array){
             if(value!=""){
                 var option = document.createElement("option");
-                option.value=childArray[sdel].id;
-                option.text=childArray[sdel].name;           targetSelect.add(option);
+                option.value=array[sdel].id;
+                option.text=array[sdel].name;
+                target.add(option);
             }
         }
     }
@@ -258,7 +250,7 @@ var ShowAddress = function(selectId){
 }
 window.onload=function(){
     var selectId=new ShowAddress(["siDo","siGoonGu","meonDong","gill"]);
-    selectId.initial();
+    selectId.initialize();
 }
 </script>
 </head>
