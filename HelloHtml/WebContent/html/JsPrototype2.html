@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+(function(){
+	function Person(arg){
+		this.name=arg;
+	}
+	
+	Function.prototype.method = function(name,func){//표현식 바로실행됨
+		this.prototype[name] = func;
+	}
+	
+	Person.method("setName", function(name){
+		this.name = name;
+	});
+	
+	Person.method("getName",function(){
+		return this.name;
+	});
+	
+	function Student(){
+		this.addmissonDate;
+	}
+	
+	function F(){};
+	F.prototype = Person.prototype;
+	
+	Student.prototype = new F();//constructor사라짐
+	Student.prototype.constructor = Student;//constructor 재생성
+	
+	var me = new Student();
+	me.setName("홍길동");
+	console.log(me);
+	console.dir(me);
+	
+	
+})();
+</script>
+</head>
+<body>
+
+</body>
+</html>

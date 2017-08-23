@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="../js/jquery-3.2.1.js"></script>
+<script>
+// (function($){
+	
+// })(jQuery);
+$(document).ready(function(){
+// 	jQuery.fn.init.prototype.greenify
+// 	$.fn.greenify 
+	$.fn.greenify= function(){//사용자정의함수 추가 $.fn. 으로 접근 jQuery selector이용하여 요소추가
+		return this.each(function(index,ele){
+			$(ele).css({backgroundColor:"green"});//ele=dom객체
+		});
+	console.dir(this);
+	};
+	$.fn.extend({//extend 새로운객체 생성할때/자기자신 확장할때
+		changeCssColor:function(){
+			return this.each(function(index,ele){//최종적으로 this객체를 return -> 함수체이닝
+				$(ele).css({backgroundColor:"red"});//ele=dom객체
+			});
+		}
+	})
+	var $divFoo=$("div.foo").click(function(){//string타입으로 선택자
+		$("span",this).toggleClass("bar");//toggleClass 있으면 //string+dom요소
+		$(this).css({border : "1px solid blue"});//dom요소 this
+	}).greenify();//함수체이닝 : 함수 return이 객체가 return되기때문에 다른함수들 추가 가능
+	
+	$("#appendDiv").on("click",function(){
+		$("<div/>",{class : "default", //tag이름
+			text:"click me!", 
+			click:function(){
+				$(this).toggleClass("test");
+		}}).appendTo("body");
+	});
+	
+	jQuery.greenify2 = function(elements){//jQuery함수에 추가하는방법
+		$(elements).css({backgroundColor:"yellow"});//selector
+		console.dir(elements);
+	};
+	$.greenify2("div.yellow");
+// 	$.greenify2("div#header");
+// 	$.extend({
+// 		greenify2: function(elements){//jQuery함수에 추가하는방법
+// 			$(elements).css({backgroundColor:"green"});
+// 	});//jQuery함수에 추가하는방법
+	
+	$("div#header").greenify().changeCssColor();
+	$("div#contents").changeCssColor();
+	
+// 	$divFoo.greenify();
+});//dom객체가 다 read되었을때 실행
+
+// $(function(){
+	
+// });//dom객체가 다 read되었을때 실행
+// window.onload=function(){
+// 	var divFoo = $("div.foo");
+// 	console.dir(divFoo);
+// 	var firstDiv=divFoo[0];
+// 	var secondDiv=divFoo[1];
+// // 	divFoo.click(function(){
+// // 		$("span",this).addClass("bar");
+		
+// // 	})
+// 	$.each([1,2,3,4],function(index,value){
+// 		console.log(index+" "+value);
+// 	})
+// 	divFoo.each(function(index,value){
+// 		console.log(index+" "+value);
+// 		console.dir(this);
+// 	}).click(function(){
+// 		$("span",this).addClass("bar");
+// 	})
+	
+// }
+</script>
+<style type="text/css">
+div.default {
+	border : 1px solid hotpink;
+}
+div.test{
+	background-color: red;
+}
+div.foo>span.bar{
+	color :red;
+	background-color : blue;	
+}
+</style>
+</head>
+<body>
+	<input type="button" id="appendDiv" value="div추가">
+	<div id="header">header</div><br/>
+	<div class="yellow">yellow</div><br/>
+	<div id="contents">contents</div><br/>
+	<div class="foo">
+		<span>첫번째 div</span>
+	</div><br/>
+	<div class="foo">
+		<span>두번째 div</span>
+	</div>
+</body>
+</html>

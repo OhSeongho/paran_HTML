@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="../js/jquery-3.2.1.js"></script>
+<script>
+$(document).ready(function(){
+	$.fn.userToggleClass = function(pClassNm){
+		return this.each(function(index,value){
+			$(value).on("click",function(){
+				if($(value).hasClass(pClassNm)==true){
+					$(value).removeClass(pClassNm);	
+					console.log(index,value);
+				}else{
+					$(value).addClass(pClassNm);
+					console.log(index,value);
+				}
+			});
+		});
+	};	
+	
+	$("div").userToggleClass("test");
+});
+
+</script>
+<style>
+	div.test{
+		border :1px solid red;
+		text : 10px;
+	}
+</style>
+</head>
+<body>
+
+<div class="foo"><span>div1</span></div>
+<div class="foo">div2</div>
+<div class="foo">div3</div>
+<div class="foo">div4</div>
+<div class="foo">div5</div>
+<div>div6</div>
+
+</body>
+</html>

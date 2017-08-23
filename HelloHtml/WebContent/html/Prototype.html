@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+(function(){
+	function Person(name){
+		this.name = name||"default";
+		this.version=1.6;
+		this.getName = function(){
+			return this.name;
+		};
+		//생성자함수 (new)로 호출시 boolean,숫자,문자열은 무시, this로 바인딩된 객체반환
+		
+	}
+	Person.prototype.version=1.5;
+	Person.prototype.getVersion=function(){
+		return this.version;
+	}
+	var person1= new Person("홍길동");
+	var person2= new Person("임꺽정");
+	person1.version=1.7;
+	person2.version=1.9;
+// 	console.log(person1.getVersion());
+// 	console.log(person2.getVersion());
+})();
+(function(){
+	function Person(name){
+		if(!(this instanceof Person)){
+			return new Person(name);
+		}
+		this.name = name||"default";
+		
+		this.getName = function(){
+			return this.name;
+		};
+		//생성자함수 (new)로 호출시 boolean,숫자,문자열은 무시, this로 바인딩된 객체반환
+		
+	}
+	
+	Person.prototype.version=1.4;
+	Person.prototype.getVersion=function(){
+		return this.version;
+	}
+	var foo = new Person("홍길동");
+// 	console.log(foo instanceof Person);
+	
+	Person.prototype={
+			version : 1.5,
+			getVersion:function(){
+				return this.version;
+			}
+	};
+// 	console.log(bar instanceof Person);
+	var bar = new Person("임꺽정");
+	
+// 	console.log(foo.getVersion());
+// 	console.log(bar.getVersion());
+	
+})();
+
+(function(){
+	var obj ={
+			name : "홍길동",
+	};
+	eval("obj.version=1.5");
+	console.log(obj);
+	console.dir(obj);
+})();
+ 
+</script>
+</head>
+<body>
+
+</body>
+</html>

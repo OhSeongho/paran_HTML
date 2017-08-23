@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+(function(){
+	var obj={
+			data :[1,2,3],
+			validDate:"2017-08-23"
+	}
+	var property = getProperty(); 
+	
+	var data = obj[property];
+	
+	console.dir(data);
+	
+	function getProperty(){
+		return "data";
+	}
+})();
+(function(){
+	var obj={
+			data:{
+				innerData:{
+					realData:1234
+					}
+			}
+	};
+	inner();
+	function inner(){
+		
+		with(obj.data.innerData){
+			console.log(realData);			
+		}
+			console.log(obj.data.innerData.realData);			
+		
+	}
+})();
+</script>
+</head>
+<body>
+
+</body>
+</html>
