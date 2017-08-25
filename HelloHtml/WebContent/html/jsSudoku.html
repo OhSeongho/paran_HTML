@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<script src ="../js/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var tableRow=$("table>tbody").children("tr");
+	for(var i=0;i<tableRow.length;i++){
+		$(tableRow[i]).addClass("row"+i);		
+	}
+	initSudoku(tableRow.length)
+})
+
+function initSudoku(length){
+	
+	var randomArray=makeRandomArr(length);
+	
+	var basicArray=[[0,0,0],[0,0,0],[0,0,0]];
+	var multiArray1=[[0,0,1],[1,0,0],[0,1,0]];
+	var multiArray2=[[0,1,0],[0,0,1],[1,0,0]];
+
+ 	var cube1,cube2,cube3,cube4,cube5,cube6,cube7,cube8,cube9;
+ 	cube1=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube2=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube3=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube4=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube5=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube6=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube7=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube8=[[0,0,0],[0,0,0],[0,0,0]];
+ 	cube9=[[0,0,0],[0,0,0],[0,0,0]];
+ 	
+	var count=0;
+	for(var i=0;i<basicArray.length;i++){		
+		for(var j=0;j<basicArray.length;j++){
+			basicArray[i][j]=randomArray[count];
+			cube1[i][j]=basicArray[i][j];
+			count++;			
+		}
+	}	
+	for(var i=0;i<cube1.length;i++){
+		for(var j=0;j<cube1.length;j++){			
+			for(var k=0;k<cube1.length;k++){
+				cube2[i][j]+=multiArray2[i][k]*cube1[k][j];
+				cube3[i][j]+=multiArray1[i][k]*cube1[k][j];
+			}
+		}
+	}
+	console.log(cube1);
+	console.log(cube2);
+	console.log(cube3);
+	return basicArray;
+}
+function makeRandomArr(length){
+	var ar=new Array();
+	var temp;
+	var rnum;
+	
+	for(var i=1;i<=length;i++){
+		ar.push(i);
+	}
+	
+	for(var i=0;i<length;i++){
+		rnum=Math.floor(Math.random()*length);
+		temp = ar[i];
+		ar[i]=ar[rnum];
+		ar[rnum]=temp;
+	}
+	return ar;
+}
+
+
+</script>
+<style type="text/css">
+	table{
+		
+		border-collapse : collapse;
+	}
+	table>tbody input {
+		width : 50px;
+		height : 50px;
+	}
+</style>
+</head>
+<body>
+<table border =2>
+	<tbody>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+		<tr>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		<td><input type=text></td>
+		</tr>
+	</tbody>	
+</table>
+<div>
+	<input type="button" value="easy" text="easy">
+	<input type="button" value="medium" text="medium">
+	<input type="button" value="hard" text="hard">
+</div>
+</body>
+</html>
