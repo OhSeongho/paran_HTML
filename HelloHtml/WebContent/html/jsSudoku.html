@@ -153,39 +153,45 @@
 		var rowTemp = [];
 		var colTemp = [];
 		var smallCubeTemp = [];
-		$("table>tbody input").css({"background":""});
+// 		$("table>tbody input").css({"background":""});
 		if ($("table>tbody>tr>td").hasClass(row) == true) {
 			for (var i = 0; i < 9; i++) {
 				rowTemp.push($("table>tbody>tr>td." + row + ">input")[i].value);
 				colTemp.push($("table>tbody>tr>td." + col + ">input")[i].value);
 				smallCubeTemp.push($("table>tbody>tr>td." + smallCube+">input")[i].value);
 			}
-			for (var i = 0; i < row.length; i++) {
-				for (var j = 0; j < row.length; j++) {
-					if ((i != j) & rowTemp[i] != "") {
-						if (rowTemp[i] == rowTemp[j]) {
-							$("table>tbody>tr>td." + row+">input").css({"background" : "#ff0000"});
-						} 
-					}
+		}
+// 		console.dir(colTemp);
+// 		console.dir(rowTemp);
+// 		console.dir(smallCubeTemp);
+		for (var i = 0; i < row.length; i++) {
+			for (var j = 0; j < row.length; j++) {
+				if (rowTemp[i] != "") {
+					if (rowTemp[i] == rowTemp[j]) {
+						console.log(rowTemp[i],rowTemp[j]);
+						$("table>tbody>tr>td." + row+">input").css({"background" : "#ff0000"});
+					} 
 				}
 			}
-					console.log(rowTemp);
-			for (var i = 0; i < col.length; i++) {
-				for (var j = 0; j < col.length; j++) {
-					if ((i != j) & colTemp[i] != "") {
-						if (colTemp[i] == colTemp[j]) {
-							$("table>tbody>tr>td." + col+">input").css({"background" : "#ff0000"});
-						} 
-					}
+		}
+// 		console.log($("table>tbody>tr>td." + smallCube+">input"));
+				
+		for (var i = 0; i < col.length; i++) {
+			for (var j = 0; j < col.length; j++) {
+				if ((i != j) & colTemp[i] != "") {
+					if (colTemp[i] == colTemp[j]) {
+						$("table>tbody>tr>td." + col+">input").css({"background" : "#ff0000"});
+					} 
 				}
 			}
-			for (var i = 0; i < smallCube.length; i++) {
-				for (var j = 0; j < smallCube.length; j++) {
-					if ((i != j) & smallCubeTemp[i] != "") {
-						if (smallCubeTemp[i] == smallCubeTemp[j]) {
-							$("table>tbody>tr>td." + smallCube+">input").css({"background" : "#ff0000"});
-						} 
-					}
+		}
+		for (var i = 0; i < smallCube.length; i++) {
+			for (var j = 0; j < smallCube.length; j++) {
+				if ((i != j) & smallCubeTemp[i] != "") {
+					if (smallCubeTemp[i] == smallCubeTemp[j]) {
+						
+						$("table>tbody>tr>td." + smallCube+">input").css({"background" : "#ff0000"});
+					} 
 				}
 			}
 		}
