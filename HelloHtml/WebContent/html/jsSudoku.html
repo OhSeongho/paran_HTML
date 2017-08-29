@@ -6,27 +6,236 @@
 <script src="../js/jquery-3.2.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		var bigCube;
+		var make=new Sudoku();
+		
 		var tableRow = $("table>tbody").children("tr");
-		for (var i = 0; i < tableRow.length; i++) {
-			$(tableRow[i]).addClass("row" + i);
-		}
-		$("div>input").on("click", function() {
-			if (this.value == "easy") {
-				initBigCube(tableRow.length, this.value);
-			} else if (this.value == "medium") {
-				initBigCube(tableRow.length, this.value);
-			} else if (this.value == "hard") {
-				initBigCube(tableRow.length, this.value);
-			} else if (this.value == "clear") {
-				clearCube();
-			}
-		});
+		
+		
+		make.init();
+		
+// 		for (var i = 0; i < tableRow.length; i++) {
+// 			$(tableRow[i]).addClass("row" + i);
+// 		}	
+// 		$("div>input").on("click", function() {
+// 			if (this.value == "easy") {				
+// 				bigCube=initBigCube(tableRow.length, this.value);
+// 			} else if (this.value == "medium") {				
+// 				bigCube=initBigCube(tableRow.length, this.value);				
+// 			} else if (this.value == "hard") {				
+// 				bigCube=initBigCube(tableRow.length, this.value);				
+// 			} else if (this.value == "clear") {				
+// 				clearAllWindow();				
+// 			} else if (this.value =="submit"){				
+// 				compareAnswer(bigCube,$("table>tbody>tr input"));
+// 			}
+// 		});
 		$("table>tbody>tr input").keyup(function() {
-			correctAnswer($(this).parent()[0].classList);
+			checkErrorAnswer($(this).parent()[0].classList);
 		});
 
-	})
+	});
+	
+	var Sudoku=function(){
+		var largeCube;
+		this.init = function(){
+			var tableRow=$("table>tbody").children("tr");
+			for(var i=0;i<tableRow.length;i++){
+				$(tableRow[i]).addClass("row"+i);
+			}
+			largeCube=makeBigCube(makeRandomNum(tableRow.length));
+			$("div>input").on("click", function() {
+				if (this.value == "easy") {			
+// 					console.log(this.value);
+					pushNumCube(largeCube, this.value);
+				} else if (this.value == "medium") {
+// 					console.log(this.value);
+					pushNumCube(largeCube, this.value);				
+				} else if (this.value == "hard") {	
+// 					console.log(this.value);
+					pushNumCube(largeCube, this.value);				
+				} else if (this.value == "clear") {	
+// 					console.log(this.value);
+					clearAllWindow();				
+				} else if (this.value =="submit"){				
+// 					console.log(this.value);
+					compareAnswer(bigCube,$("table>tbody>tr input"));
+				}
+			});
+		};
+		
+		function makeRandomNum(length){
+			var ar = new Array();
+			var temp;
+			var rnum;
+
+			for (var i = 1; i <= length; i++) {
+				ar.push(i);
+			}
+			for (var i = 0; i < length; i++) {
+				rnum = Math.floor(Math.random() * length);
+				temp = ar[i];
+				ar[i] = ar[rnum];
+				ar[rnum] = temp;
+			}
+			return ar;
+		};
+		
+		function makeBigCube(pArr){
+			var multiArray1 = [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ];
+			var multiArray2 = [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ];
+			var cube = new Array();
+			var bigCube = new Array();
+			var index = 0;
+
+			for (var i = 0; i < pArr.length; i++) {
+				cube[i] = [ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ];
+			}
+			
+			for(var i=0,count=0; i<multiArray1.length, count<pArr.length;i++){
+				for(var j=0;j<multiArray1.length;j++){
+					cube[0][i][j]=pArr[count];
+					count++;
+				}
+			}
+			for(var index=1;index<=pArr.length;index++){
+				for (var i = 0; i < multiArray1.length; i++) {
+					for (var j = 0; j < multiArray1.length; j++) {
+						for (var k = 0; k < multiArray1.length; k++) {
+							if (index == 1) {
+								cube[index][i][j] += multiArray2[i][k] * cube[0][k][j];
+							} else if (index == 2) {
+								cube[index][i][j] += multiArray1[i][k] * cube[0][k][j];
+							} else if (index == 3) {
+								cube[index][i][j] += cube[0][i][k] * multiArray1[k][j];
+							} else if (index == 4) {
+								cube[index][i][j] += cube[1][i][k] * multiArray1[k][j];
+							} else if (index == 5) {
+								cube[index][i][j] += cube[2][i][k] * multiArray1[k][j];
+							} else if (index == 6) {
+								cube[index][i][j] += cube[0][i][k] * multiArray2[k][j];
+							} else if (index == 7) {
+								cube[index][i][j] += cube[1][i][k] * multiArray2[k][j];
+							} else if (index == 8) {
+								cube[index][i][j] += cube[2][i][k] * multiArray2[k][j];
+							}
+						}
+					}
+				}
+			}
+			for (var i = 0, index=0; i < 3,index<pArr.length; i++) {
+				for (var j = 0; j < 3; j++) {
+					bigCube[index] = cube[3 * i][j].concat(cube[3 * i + 1][j],cube[3 * i + 2][j]);
+					index++;
+				}
+			}
+			return bigCube;
+		};
+		function pushNumCube(pArr, level) {
+			clearAllWindow();	
+			var row = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' ];
+			var levelArray;
+			var count = 0;
+			if (level == "easy") {
+				levelArray = [ 4, 5, 4, 6, 4, 5, 4, 5, 6 ];
+			} else if (level == "medium") {
+				levelArray = [ 3, 4, 2, 3, 4, 2, 3, 3, 4 ];
+			} else if (level == "hard") {
+				levelArray = [ 2, 3, 1, 3, 2, 2, 3, 2, 3 ];
+			}
+			while (levelArray.length != 0) {
+				var randomCount = Math.floor(Math.random() * levelArray.length);
+				var pushNum = levelArray[randomCount];
+				var randomArray = [];
+				levelArray.splice(randomCount, 1);
+				for (var i = 0; i < pushNum; i++) {
+				
+					var colNum = Math.floor(Math.random() * 9);
+					if (randomArray.indexOf(colNum) == -1) {
+						$("#" + row[count] + (colNum + 1) + ">input").val(pArr[count][colNum]);
+						if ($("#" + row[count] + (colNum + 1) + ">input").val() != "") {
+							$("#" + row[count] + (colNum + 1) + ">input").attr("readonly", true);
+						}
+					} else {
+						i--;
+					}
+				}
+				count++;
+			}
+		};
+		function checkErrorAnswer(pList) {
+			var row = pList[0];
+			var col = pList[1];
+			var smallCube = pList[2];
+			var rowTemp = [];
+			var colTemp = [];
+			var smallCubeTemp = [];
+	 		$("table>tbody input").css({"background":""});
+			for (var i = 0; i < 9; i++) {
+				rowTemp.push($("table>tbody>tr>td." + row + ">input")[i].value);
+				colTemp.push($("table>tbody>tr>td." + col + ">input")[i].value);
+				smallCubeTemp.push($("table>tbody>tr>td." + smallCube+">input")[i].value);
+			}
+			for (var i = 0; i < rowTemp.length; i++) {
+				for (var j = 0; j < rowTemp.length; j++) {
+					if ((i!=j)&rowTemp[i] != "") { 						
+						if (rowTemp[i] == rowTemp[j]) {						
+							$("table>tbody>tr>td." + row+">input").css({"background" : "#ff0000"});
+						} 
+					}
+				}
+			}	
+			
+			for (var i = 0; i < colTemp.length; i++) {
+				for (var j = 0; j < colTemp.length; j++) {
+					if ((i != j) & colTemp[i] != "") {
+						if (colTemp[i] == colTemp[j]) {						
+							$("table>tbody>tr>td." + col+">input").css({"background" : "#ff0000"});
+						} 
+					}
+				}
+			}
+			for (var i = 0; i < smallCubeTemp.length; i++) {
+				for (var j = 0; j < smallCubeTemp.length; j++) {
+					if ((i != j) & smallCubeTemp[i] != "") {
+						if (smallCubeTemp[i] == smallCubeTemp[j]) {
+							$("table>tbody>tr>td." + smallCube+">input").css({"background" : "#ff0000"});
+						} 
+					}
+				}
+			}
+			rowTemp = [];
+			colTemp = [];
+			smllCubeTemp = []
+		}
+		function compareAnswer(bigCube,submitArr){		
+			var tempArr=new Array(bigCube.length);
+			var index=0;
+			for(var i=0;i<tempArr.length;i++){
+				tempArr[i]=new Array(bigCube.length);
+			}
+			
+			for(var i=0,count=0;i<tempArr.length,count<submitArr.length;i++){
+				for(var j=0;j<tempArr.length;j++){
+					tempArr[i][j]=submitArr[count].value;
+					count++;
+				}
+			}		
+			for(var i=0;i<bigCube.length;i++){
+				for(var j=0;j<bigCube.length;j++){
+					if(bigCube[i][j] != tempArr[i][j]){
+						$("#checkFrame").append("<div>"+i+"x"+j+"숫자가 틀렸습니다."+"</div>");				
+					}
+				}
+			}
+			$("#checkFrame").append("<div>---------------------------------------------</div>");
+		}
+
+		function clearAllWindow() {
+			$("tbody input").val("").removeAttr("readonly","style");
+			$("#checkFrame").empty();
+		}
+	};
 
 	function makeRandomNumArr(length) {
 		var ar = new Array();
@@ -46,9 +255,9 @@
 	}
 
 	function initBigCube(length, level) {
-		clearCube();
+		clearAllWindow();
+		
 		var randomNumArray = makeRandomNumArr(length);
-
 		var basicArray = [ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ];
 		var multiArray1 = [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ];
 		var multiArray2 = [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ];
@@ -59,11 +268,11 @@
 		for (var i = 0; i < length; i++) {
 			cube[i] = [ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ];
 		}
-		var count = 0;
-		for (var i = 0; i < basicArray.length; i++) {
+		
+		for (var i = 0,count=0; i < basicArray.length; i++) {
 			for (var j = 0; j < basicArray.length; j++) {
 				basicArray[i][j] = randomNumArray[count];
-				cube[0][i][j] = basicArray[i][j];
+				cube[0][i][j] = randomNumArray[count];
 				count++;
 			}
 		}
@@ -72,44 +281,32 @@
 				for (var j = 0; j < basicArray.length; j++) {
 					for (var k = 0; k < basicArray.length; k++) {
 						if (index == 1) {
-							cube[index][i][j] += multiArray2[i][k]
-									* cube[0][k][j];
+							cube[index][i][j] += multiArray2[i][k] * cube[0][k][j];
 						} else if (index == 2) {
-							cube[index][i][j] += multiArray1[i][k]
-									* cube[0][k][j];
+							cube[index][i][j] += multiArray1[i][k] * cube[0][k][j];
 						} else if (index == 3) {
-							cube[index][i][j] += cube[0][i][k]
-									* multiArray1[k][j];
+							cube[index][i][j] += cube[0][i][k] * multiArray1[k][j];
 						} else if (index == 4) {
-							cube[index][i][j] += cube[1][i][k]
-									* multiArray1[k][j];
+							cube[index][i][j] += cube[1][i][k] * multiArray1[k][j];
 						} else if (index == 5) {
-							cube[index][i][j] += cube[2][i][k]
-									* multiArray1[k][j];
+							cube[index][i][j] += cube[2][i][k] * multiArray1[k][j];
 						} else if (index == 6) {
-							cube[index][i][j] += cube[0][i][k]
-									* multiArray2[k][j];
+							cube[index][i][j] += cube[0][i][k] * multiArray2[k][j];
 						} else if (index == 7) {
-							cube[index][i][j] += cube[1][i][k]
-									* multiArray2[k][j];
+							cube[index][i][j] += cube[1][i][k] * multiArray2[k][j];
 						} else if (index == 8) {
-							cube[index][i][j] += cube[2][i][k]
-									* multiArray2[k][j];
+							cube[index][i][j] += cube[2][i][k] * multiArray2[k][j];
 						}
 					}
 				}
 			}
 		}
-
-		index = 0;
-		for (var i = 0; i < 3; i++) {
+		for (var i = 0, index=0; i < 3,index<length; i++) {
 			for (var j = 0; j < 3; j++) {
-				bigCube[index] = cube[3 * i][j].concat(cube[3 * i + 1][j],
-						cube[3 * i + 2][j]);
+				bigCube[index] = cube[3 * i][j].concat(cube[3 * i + 1][j],cube[3 * i + 2][j]);
 				index++;
 			}
 		}
-		pushNumCube(bigCube, level);
 		return bigCube;
 	}
 
@@ -118,7 +315,7 @@
 		var levelArray;
 		var count = 0;
 		if (level == "easy") {
-			levelArray = [ 4, 5, 4, 6, 4, 5, 4, 5, 4 ];
+			levelArray = [ 4, 5, 4, 6, 4, 5, 4, 5, 6 ];
 		} else if (level == "medium") {
 			levelArray = [ 3, 4, 2, 3, 4, 2, 3, 3, 4 ];
 		} else if (level == "hard") {
@@ -135,8 +332,7 @@
 					$("#" + row[count] + (colNum + 1) + ">input").val(
 							bigCube[count][colNum]);
 					if ($("#" + row[count] + (colNum + 1) + ">input").val() != "") {
-						$("#" + row[count] + (colNum + 1) + ">input").attr(
-								"readonly", true);
+						$("#" + row[count] + (colNum + 1) + ">input").attr("readonly", true);
 					}
 				} else {
 					i--;
@@ -146,78 +342,88 @@
 		}
 	}
 
-	function correctAnswer(pList) {
+	function checkErrorAnswer(pList) {
 		var row = pList[0];
 		var col = pList[1];
 		var smallCube = pList[2];
 		var rowTemp = [];
 		var colTemp = [];
 		var smallCubeTemp = [];
-// 		$("table>tbody input").css({"background":""});
-		if ($("table>tbody>tr>td").hasClass(row) == true) {
-			for (var i = 0; i < 9; i++) {
-				rowTemp.push($("table>tbody>tr>td." + row + ">input")[i].value);
-				colTemp.push($("table>tbody>tr>td." + col + ">input")[i].value);
-				smallCubeTemp.push($("table>tbody>tr>td." + smallCube+">input")[i].value);
-			}
+ 		$("table>tbody input").css({"background":""});
+		for (var i = 0; i < 9; i++) {
+			rowTemp.push($("table>tbody>tr>td." + row + ">input")[i].value);
+			colTemp.push($("table>tbody>tr>td." + col + ">input")[i].value);
+			smallCubeTemp.push($("table>tbody>tr>td." + smallCube+">input")[i].value);
 		}
-// 		console.dir(colTemp);
-// 		console.dir(rowTemp);
-// 		console.dir(smallCubeTemp);
-		for (var i = 0; i < row.length; i++) {
-			for (var j = 0; j < row.length; j++) {
-				if (rowTemp[i] != "") {
-					if (rowTemp[i] == rowTemp[j]) {
-						console.log(rowTemp[i],rowTemp[j]);
+		for (var i = 0; i < rowTemp.length; i++) {
+			for (var j = 0; j < rowTemp.length; j++) {
+				if ((i!=j)&rowTemp[i] != "") { 						
+					if (rowTemp[i] == rowTemp[j]) {						
 						$("table>tbody>tr>td." + row+">input").css({"background" : "#ff0000"});
 					} 
 				}
 			}
-		}
-// 		console.log($("table>tbody>tr>td." + smallCube+">input"));
-				
-		for (var i = 0; i < col.length; i++) {
-			for (var j = 0; j < col.length; j++) {
+		}	
+		
+		for (var i = 0; i < colTemp.length; i++) {
+			for (var j = 0; j < colTemp.length; j++) {
 				if ((i != j) & colTemp[i] != "") {
-					if (colTemp[i] == colTemp[j]) {
+					if (colTemp[i] == colTemp[j]) {						
 						$("table>tbody>tr>td." + col+">input").css({"background" : "#ff0000"});
 					} 
 				}
 			}
 		}
-		for (var i = 0; i < smallCube.length; i++) {
-			for (var j = 0; j < smallCube.length; j++) {
+		for (var i = 0; i < smallCubeTemp.length; i++) {
+			for (var j = 0; j < smallCubeTemp.length; j++) {
 				if ((i != j) & smallCubeTemp[i] != "") {
 					if (smallCubeTemp[i] == smallCubeTemp[j]) {
-						
 						$("table>tbody>tr>td." + smallCube+">input").css({"background" : "#ff0000"});
 					} 
 				}
 			}
 		}
-			rowTemp = [];
-			colTemp = [];
-			smllCubeTemp = []
+		rowTemp = [];
+		colTemp = [];
+		smllCubeTemp = []
+	}
+	function compareAnswer(bigCube,submitArr){		
+		var tempArr=new Array(bigCube.length);
+		var index=0;
+		for(var i=0;i<tempArr.length;i++){
+			tempArr[i]=new Array(bigCube.length);
+		}
 		
-		
-		
-
+		for(var i=0,count=0;i<tempArr.length,count<submitArr.length;i++){
+			for(var j=0;j<tempArr.length;j++){
+				tempArr[i][j]=submitArr[count].value;
+				count++;
+			}
+		}		
+		for(var i=0;i<bigCube.length;i++){
+			for(var j=0;j<bigCube.length;j++){
+				if(bigCube[i][j] != tempArr[i][j]){
+					$("#checkFrame").append("<div>"+i+"x"+j+"숫자가 틀렸습니다."+"</div>");				
+				}
+			}
+		}
+		$("#checkFrame").append("<div>---------------------------------------------</div>");
 	}
 
-	function clearCube() {
-		$("tbody input").val("");
+	function clearAllWindow() {
+		$("tbody input").val("").removeAttr("readonly","style");
+		$("#checkFrame").empty();
 	}
+
 </script>
 <style type="text/css">
 table {
 	border: 3px solid black;
 	border-collapse: collapse;
 }
-
 table>tbody>tr {
 	border: 1px solid black;
 }
-
 table>tbody input {
 	width: 50px;
 	height: 50px;
@@ -236,117 +442,135 @@ table>tbody input {
 	#H3, #H6, #I3, #I6 {
 	border-right-width: 3px;
 }
+#checkFrame{
+	width : 400px;
+	height : 200px;
+	overflow: scroll;
+}
+h1{
+	text-align:center;
+}
+div>input{
+	width:80px;
+	height: 30px;
+}
 </style>
 </head>
 <body>
-	<table border=2>
+	<h1>Sudoku</h1>
+	<div id="timer"></div>
+	<div id="cube" >
+	<table border=3>
 		<tbody>
 			<tr>
-				<td id="A1" class="r1 c1 u1"><input type=text></td>
-				<td id="A2" class="r1 c2 u1"><input type=text></td>
-				<td id="A3" class="r1 c3 u1"><input type=text></td>
-				<td id="A4" class="r1 c4 u2"><input type=text></td>
-				<td id="A5" class="r1 c5 u2"><input type=text></td>
-				<td id="A6" class="r1 c6 u2"><input type=text></td>
-				<td id="A7" class="r1 c7 u3"><input type=text></td>
-				<td id="A8" class="r1 c8 u3"><input type=text></td>
-				<td id="A9" class="r1 c9 u3"><input type=text></td>
+				<td id="A1" class="r1 c1 u1"><input type="text" maxlength="1"></td>
+				<td id="A2" class="r1 c2 u1"><input type="text" maxlength="1"></td>
+				<td id="A3" class="r1 c3 u1"><input type="text" maxlength="1"></td>
+				<td id="A4" class="r1 c4 u2"><input type="text" maxlength="1"></td>
+				<td id="A5" class="r1 c5 u2"><input type="text" maxlength="1"></td>
+				<td id="A6" class="r1 c6 u2"><input type="text" maxlength="1"></td>
+				<td id="A7" class="r1 c7 u3"><input type="text" maxlength="1"></td>
+				<td id="A8" class="r1 c8 u3"><input type="text" maxlength="1"></td>
+				<td id="A9" class="r1 c9 u3"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="B1" class="r2 c1 u1"><input type=text></td>
-				<td id="B2" class="r2 c2 u1"><input type=text></td>
-				<td id="B3" class="r2 c3 u1"><input type=text></td>
-				<td id="B4" class="r2 c4 u2"><input type=text></td>
-				<td id="B5" class="r2 c5 u2"><input type=text></td>
-				<td id="B6" class="r2 c6 u2"><input type=text></td>
-				<td id="B7" class="r2 c7 u3"><input type=text></td>
-				<td id="B8" class="r2 c8 u3"><input type=text></td>
-				<td id="B9" class="r2 c9 u3"><input type=text></td>
+				<td id="B1" class="r2 c1 u1"><input type="text" maxlength="1"></td>
+				<td id="B2" class="r2 c2 u1"><input type="text" maxlength="1"></td>
+				<td id="B3" class="r2 c3 u1"><input type="text" maxlength="1"></td>
+				<td id="B4" class="r2 c4 u2"><input type="text" maxlength="1"></td>
+				<td id="B5" class="r2 c5 u2"><input type="text" maxlength="1"></td>
+				<td id="B6" class="r2 c6 u2"><input type="text" maxlength="1"></td>
+				<td id="B7" class="r2 c7 u3"><input type="text" maxlength="1"></td>
+				<td id="B8" class="r2 c8 u3"><input type="text" maxlength="1"></td>
+				<td id="B9" class="r2 c9 u3"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="C1" class="r3 c1 u1"><input type=text></td>
-				<td id="C2" class="r3 c2 u1"><input type=text></td>
-				<td id="C3" class="r3 c3 u1"><input type=text></td>
-				<td id="C4" class="r3 c4 u2"><input type=text></td>
-				<td id="C5" class="r3 c5 u2"><input type=text></td>
-				<td id="C6" class="r3 c6 u2"><input type=text></td>
-				<td id="C7" class="r3 c7 u3"><input type=text></td>
-				<td id="C8" class="r3 c8 u3"><input type=text></td>
-				<td id="C9" class="r3 c9 u3"><input type=text></td>
+				<td id="C1" class="r3 c1 u1"><input type="text" maxlength="1"></td>
+				<td id="C2" class="r3 c2 u1"><input type="text" maxlength="1"></td>
+				<td id="C3" class="r3 c3 u1"><input type="text" maxlength="1"></td>
+				<td id="C4" class="r3 c4 u2"><input type="text" maxlength="1"></td>
+				<td id="C5" class="r3 c5 u2"><input type="text" maxlength="1"></td>
+				<td id="C6" class="r3 c6 u2"><input type="text" maxlength="1"></td>
+				<td id="C7" class="r3 c7 u3"><input type="text" maxlength="1"></td>
+				<td id="C8" class="r3 c8 u3"><input type="text" maxlength="1"></td>
+				<td id="C9" class="r3 c9 u3"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="D1" class="r4 c1 u4"><input type=text></td>
-				<td id="D2" class="r4 c2 u4"><input type=text></td>
-				<td id="D3" class="r4 c3 u4"><input type=text></td>
-				<td id="D4" class="r4 c4 u5"><input type=text></td>
-				<td id="D5" class="r4 c5 u5"><input type=text></td>
-				<td id="D6" class="r4 c6 u5"><input type=text></td>
-				<td id="D7" class="r4 c7 u6"><input type=text></td>
-				<td id="D8" class="r4 c8 u6"><input type=text></td>
-				<td id="D9" class="r4 c9 u6"><input type=text></td>
+				<td id="D1" class="r4 c1 u4"><input type="text" maxlength="1"></td>
+				<td id="D2" class="r4 c2 u4"><input type="text" maxlength="1"></td>
+				<td id="D3" class="r4 c3 u4"><input type="text" maxlength="1"></td>
+				<td id="D4" class="r4 c4 u5"><input type="text" maxlength="1"></td>
+				<td id="D5" class="r4 c5 u5"><input type="text" maxlength="1"></td>
+				<td id="D6" class="r4 c6 u5"><input type="text" maxlength="1"></td>
+				<td id="D7" class="r4 c7 u6"><input type="text" maxlength="1"></td>
+				<td id="D8" class="r4 c8 u6"><input type="text" maxlength="1"></td>
+				<td id="D9" class="r4 c9 u6"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="E1" class="r5 c1 u4"><input type=text></td>
-				<td id="E2" class="r5 c2 u4"><input type=text></td>
-				<td id="E3" class="r5 c3 u4"><input type=text></td>
-				<td id="E4" class="r5 c4 u5"><input type=text></td>
-				<td id="E5" class="r5 c5 u5"><input type=text></td>
-				<td id="E6" class="r5 c6 u5"><input type=text></td>
-				<td id="E7" class="r5 c7 u6"><input type=text></td>
-				<td id="E8" class="r5 c8 u6"><input type=text></td>
-				<td id="E9" class="r5 c9 u6"><input type=text></td>
+				<td id="E1" class="r5 c1 u4"><input type="text" maxlength="1"></td>
+				<td id="E2" class="r5 c2 u4"><input type="text" maxlength="1"></td>
+				<td id="E3" class="r5 c3 u4"><input type="text" maxlength="1"></td>
+				<td id="E4" class="r5 c4 u5"><input type="text" maxlength="1"></td>
+				<td id="E5" class="r5 c5 u5"><input type="text" maxlength="1"></td>
+				<td id="E6" class="r5 c6 u5"><input type="text" maxlength="1"></td>
+				<td id="E7" class="r5 c7 u6"><input type="text" maxlength="1"></td>
+				<td id="E8" class="r5 c8 u6"><input type="text" maxlength="1"></td>
+				<td id="E9" class="r5 c9 u6"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="F1" class="r6 c1 u4"><input type=text></td>
-				<td id="F2" class="r6 c2 u4"><input type=text></td>
-				<td id="F3" class="r6 c3 u4"><input type=text></td>
-				<td id="F4" class="r6 c4 u5"><input type=text></td>
-				<td id="F5" class="r6 c5 u5"><input type=text></td>
-				<td id="F6" class="r6 c6 u5"><input type=text></td>
-				<td id="F7" class="r6 c7 u6"><input type=text></td>
-				<td id="F8" class="r6 c8 u6"><input type=text></td>
-				<td id="F9" class="r6 c9 u6"><input type=text></td>
+				<td id="F1" class="r6 c1 u4"><input type="text" maxlength="1"></td>
+				<td id="F2" class="r6 c2 u4"><input type="text" maxlength="1"></td>
+				<td id="F3" class="r6 c3 u4"><input type="text" maxlength="1"></td>
+				<td id="F4" class="r6 c4 u5"><input type="text" maxlength="1"></td>
+				<td id="F5" class="r6 c5 u5"><input type="text" maxlength="1"></td>
+				<td id="F6" class="r6 c6 u5"><input type="text" maxlength="1"></td>
+				<td id="F7" class="r6 c7 u6"><input type="text" maxlength="1"></td>
+				<td id="F8" class="r6 c8 u6"><input type="text" maxlength="1"></td>
+				<td id="F9" class="r6 c9 u6"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="G1" class="r7 c1 u7"><input type=text></td>
-				<td id="G2" class="r7 c2 u7"><input type=text></td>
-				<td id="G3" class="r7 c3 u7"><input type=text></td>
-				<td id="G4" class="r7 c4 u8"><input type=text></td>
-				<td id="G5" class="r7 c5 u8"><input type=text></td>
-				<td id="G6" class="r7 c6 u8"><input type=text></td>
-				<td id="G7" class="r7 c7 u9"><input type=text></td>
-				<td id="G8" class="r7 c8 u9"><input type=text></td>
-				<td id="G9" class="r7 c9 u9"><input type=text></td>
+				<td id="G1" class="r7 c1 u7"><input type="text" maxlength="1"></td>
+				<td id="G2" class="r7 c2 u7"><input type="text" maxlength="1"></td>
+				<td id="G3" class="r7 c3 u7"><input type="text" maxlength="1"></td>
+				<td id="G4" class="r7 c4 u8"><input type="text" maxlength="1"></td>
+				<td id="G5" class="r7 c5 u8"><input type="text" maxlength="1"></td>
+				<td id="G6" class="r7 c6 u8"><input type="text" maxlength="1"></td>
+				<td id="G7" class="r7 c7 u9"><input type="text" maxlength="1"></td>
+				<td id="G8" class="r7 c8 u9"><input type="text" maxlength="1"></td>
+				<td id="G9" class="r7 c9 u9"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="H1" class="r8 c1 u7"><input type=text></td>
-				<td id="H2" class="r8 c2 u7"><input type=text></td>
-				<td id="H3" class="r8 c3 u7"><input type=text></td>
-				<td id="H4" class="r8 c4 u8"><input type=text></td>
-				<td id="H5" class="r8 c5 u8"><input type=text></td>
-				<td id="H6" class="r8 c6 u8"><input type=text></td>
-				<td id="H7" class="r8 c7 u9"><input type=text></td>
-				<td id="H8" class="r8 c8 u9"><input type=text></td>
-				<td id="H9" class="r8 c9 u9"><input type=text></td>
+				<td id="H1" class="r8 c1 u7"><input type="text" maxlength="1"></td>
+				<td id="H2" class="r8 c2 u7"><input type="text" maxlength="1"></td>
+				<td id="H3" class="r8 c3 u7"><input type="text" maxlength="1"></td>
+				<td id="H4" class="r8 c4 u8"><input type="text" maxlength="1"></td>
+				<td id="H5" class="r8 c5 u8"><input type="text" maxlength="1"></td>
+				<td id="H6" class="r8 c6 u8"><input type="text" maxlength="1"></td>
+				<td id="H7" class="r8 c7 u9"><input type="text" maxlength="1"></td>
+				<td id="H8" class="r8 c8 u9"><input type="text" maxlength="1"></td>
+				<td id="H9" class="r8 c9 u9"><input type="text" maxlength="1"></td>
 			</tr>
 			<tr>
-				<td id="I1" class="r9 c1 u7"><input type=text></td>
-				<td id="I2" class="r9 c2 u7"><input type=text></td>
-				<td id="I3" class="r9 c3 u7"><input type=text></td>
-				<td id="I4" class="r9 c4 u8"><input type=text></td>
-				<td id="I5" class="r9 c5 u8"><input type=text></td>
-				<td id="I6" class="r9 c6 u8"><input type=text></td>
-				<td id="I7" class="r9 c7 u9"><input type=text></td>
-				<td id="I8" class="r9 c8 u9"><input type=text></td>
-				<td id="I9" class="r9 c9 u9"><input type=text></td>
+				<td id="I1" class="r9 c1 u7"><input type="text" maxlength="1"></td>
+				<td id="I2" class="r9 c2 u7"><input type="text" maxlength="1"></td>
+				<td id="I3" class="r9 c3 u7"><input type="text" maxlength="1"></td>
+				<td id="I4" class="r9 c4 u8"><input type="text" maxlength="1"></td>
+				<td id="I5" class="r9 c5 u8"><input type="text" maxlength="1"></td>
+				<td id="I6" class="r9 c6 u8"><input type="text" maxlength="1"></td>
+				<td id="I7" class="r9 c7 u9"><input type="text" maxlength="1"></td>
+				<td id="I8" class="r9 c8 u9"><input type="text" maxlength="1"></td>
+				<td id="I9" class="r9 c9 u9"><input type="text" maxlength="1"></td>
 			</tr>
 		</tbody>
 	</table>
-	<div>
-		<input type="button" value="easy" text="easy"> <input
-			type="button" value="medium" text="medium"> <input
-			type="button" value="hard" text="hard"> <input type="button"
-			value="clear" text="clear">
 	</div>
+	<div>
+		<input type="button" value="easy" text="easy"> 
+		<input type="button" value="medium" text="medium"> 
+		<input type="button" value="hard" text="hard"> 
+		<input type="button" value="clear" text="clear">
+		<input type="button" value="submit" text="submit">
+	</div>
+	<div id="checkFrame"></div>
 </body>
 </html>
